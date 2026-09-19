@@ -22,27 +22,21 @@ script execution.
 
 - 3D wireframe "signals globe" hero (Three.js r160, vendored; bloom, atmosphere
   shader, starfield) — desktop only, skipped for `prefers-reduced-motion`
-- Interactive particle-network background (cursor repulsion, traveling packets)
 - Orchestrated staggered hero load-in; cipher-scramble headings on scroll reveal
 - Command palette: press `/` anywhere (`help`, `projects`, `personal`, `resume`,
   `download`, `terminal`…)
 - Hidden terminal easter egg: press `` ` `` — canned client-side shell with
-  navigation, resume download, and a few jokes
-- Resume: tabbed sections, expandable timeline, animated skill bars, stat count-ups,
-  and a clean white print stylesheet so print-to-PDF produces a readable paper resume
-- Ambient ops-feed ticker and live UTC clock
+  navigation, resume download, `about`/`skills`/`contact`/`whoami`
+- Resume: tabbed sections, expandable timeline, stat count-ups, and a clean white
+  print stylesheet so print-to-PDF produces a readable paper resume
+- Live UTC clock
 
 ## Content status
 
-Populated from the Nov 2025 resume; `assets/Jeffrey_Shi_Resume.pdf` is the real,
-downloadable resume (phone number deliberately scrubbed for the public copy).
-
-Still open:
-
-- **Current role** — the timeline's latest entry is ManTech (per the resume); add
-  the current intelligence/SIGINT analyst position when shareable.
-- **Skill percentages** — the bars in `resume.html` are a visual device; tune
-  `data-width` values to taste.
+Populated from the Sept 2026 resume (threat-intel focused); `assets/Jeffrey_Shi_Resume.pdf`
+is the real, downloadable resume (phone number deliberately scrubbed for the public copy;
+clearance status is on the PDF as Jeffrey wrote it, but deliberately not repeated anywhere
+in the site's own text).
 
 ## Local preview
 

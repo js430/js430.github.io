@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects — Jeffrey Shi</title>
-  <meta name="description" content="Selected work by Jeffrey Shi — ETL pipelines, cloud infrastructure, and cyber assessment tooling for IC programs." />
+  <meta name="description" content="Selected work by Jeffrey Shi — cyber threat analysis, ETL pipelines, and security tooling for IC programs." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,8 +12,6 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <canvas id="net-canvas" aria-hidden="true"></canvas>
-
   <nav class="nav">
     <a class="nav-brand" href="index.html"><span class="brand-mark"></span>Jeffrey Shi</a>
     <div class="nav-links">
@@ -42,16 +40,37 @@
 
         <article class="case-file reveal">
           <div class="case-header">
-            <span class="case-id">CASE-2025-001</span>
+            <span class="case-id">GRVTY</span>
             <span class="case-status active">ACTIVE</span>
           </div>
           <div class="case-body">
-            <h3 data-scramble>Cyber Report ETL — Titania Nipper Module</h3>
+            <h3 data-scramble>LLM-Driven Cyber Triage Workflows</h3>
             <p>
-              At ManTech, supporting an IC cybersecurity group: modularized Python ETL
-              pipelines that parse cybersecurity scans and reports for a cyber assessment
-              platform. Built the Titania Nipper report-parsing module end to end, from
-              raw report to platform-ready ingest.
+              Built LLM-based workflows to triage and process large network-related
+              datasets for a USIC agency — cutting time from collection triage to
+              finished report by 50%+ and letting the team produce more reporting
+              over more data in the same period.
+            </p>
+            <div class="case-meta">
+              <span class="chip">Python</span>
+              <span class="chip green">LLM Workflows</span>
+              <span class="chip green">Automation</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">ManTech</span>
+            <span class="case-status archived">DELIVERED</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Multi-Scanner ETL Pipeline</h3>
+            <p>
+              Modular Python ETL pipelines that parse and normalize output from 5+
+              industry-standard security scanners — Titania Nipper, Rapid7, Nmap,
+              and others — for ingest into an IC cyber assessment platform. Built
+              the Titania Nipper module end to end.
             </p>
             <div class="case-meta">
               <span class="chip">Python</span>
@@ -64,15 +83,15 @@
 
         <article class="case-file reveal">
           <div class="case-header">
-            <span class="case-id">CASE-2025-002</span>
-            <span class="case-status active">ACTIVE</span>
+            <span class="case-id">ManTech</span>
+            <span class="case-status archived">DELIVERED</span>
           </div>
           <div class="case-body">
             <h3 data-scramble>Velociraptor Artifact Development</h3>
             <p>
-              Research and development of custom Velociraptor artifacts that extract
-              relevant system information from assets and devices, feeding automated
-              determinations of cybersecurity compliance across an enterprise.
+              Researched and built custom Velociraptor artifacts to collect host
+              configuration data, used to assess the security posture and compliance
+              of assets and devices across an IC customer's environment.
             </p>
             <div class="case-meta">
               <span class="chip">Velociraptor</span>
@@ -85,16 +104,17 @@
 
         <article class="case-file reveal">
           <div class="case-header">
-            <span class="case-id">CASE-2024-003</span>
+            <span class="case-id">GDIT</span>
             <span class="case-status archived">DELIVERED</span>
           </div>
           <div class="case-body">
             <h3 data-scramble>Kafka &rarr; Oracle/Postgres ETL Migration</h3>
             <p>
-              At GDIT, for an IC mission group running a live data feed: Python ETL
-              pipelines on an asyncio framework ingesting from Kafka topics into Oracle
-              and Postgres — part of migrating a legacy Pentaho ETL stack to a
-              Python- and Kubernetes-centered architecture.
+              For a live IC mission data feed: asynchronous Python (asyncio)
+              pipelines consuming Kafka topics and loading ~2.7M records/day —
+              over 1B per year — into Oracle and PostgreSQL. Part of migrating a
+              legacy Pentaho ETL stack to a Python- and Kubernetes-centered
+              architecture.
             </p>
             <div class="case-meta">
               <span class="chip">Python</span>
@@ -108,7 +128,7 @@
 
         <article class="case-file reveal">
           <div class="case-header">
-            <span class="case-id">CASE-2024-004</span>
+            <span class="case-id">GDIT</span>
             <span class="case-status archived">DELIVERED</span>
           </div>
           <div class="case-body">
@@ -129,7 +149,7 @@
 
         <article class="case-file reveal">
           <div class="case-header">
-            <span class="case-id">CASE-2023-005</span>
+            <span class="case-id">GDIT</span>
             <span class="case-status archived">ARCHIVED</span>
           </div>
           <div class="case-body">
@@ -151,14 +171,14 @@
 
         <article class="case-file reveal">
           <div class="case-header">
-            <span class="case-id">CASE-2026-006</span>
+            <span class="case-id">Personal</span>
             <span class="case-status dev">IN DEV</span>
           </div>
           <div class="case-body">
             <h3 data-scramble>This Website</h3>
             <p>
-              The site you're looking at: dependency-free static HTML/CSS/JS —
-              particle-network canvas, a command palette
+              The site you're looking at: dependency-free static HTML/CSS/JS — a
+              Three.js signals globe on the hero, a command palette
               (press <span style="color:var(--accent); font-family:var(--mono);">/</span>),
               and an interactive resume with a print-clean stylesheet.
             </p>

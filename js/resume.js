@@ -1,4 +1,4 @@
-/* Resume page: tabs, timeline accordions, skill-bar + stat animations, print */
+/* Resume page: tabs, timeline accordions, stat count-up, print */
 
 /* ---------- Tabs ---------- */
 (function tabs() {
@@ -11,7 +11,6 @@
     btn.addEventListener("click", () => {
       buttons.forEach((b) => b.classList.toggle("active", b === btn));
       panes.forEach((p) => (p.hidden = p.id !== "pane-" + btn.dataset.pane));
-      if (btn.dataset.pane === "skills") animateSkills();
     });
   });
 })();
@@ -53,18 +52,6 @@
   window.addEventListener("resize", () => entries.forEach(setHeight));
 })();
 
-/* ---------- Skill bars ---------- */
-let skillsAnimated = false;
-function animateSkills() {
-  if (skillsAnimated) return;
-  skillsAnimated = true;
-  document.querySelectorAll(".skill-bar .fill").forEach((fill, i) => {
-    setTimeout(() => {
-      fill.style.width = fill.dataset.width + "%";
-    }, 80 * i);
-  });
-}
-
 /* ---------- Dossier stat count-up ---------- */
 (function stats() {
   const nums = document.querySelectorAll(".stat .num[data-count]");
@@ -93,7 +80,6 @@ function animateSkills() {
       const body = e.querySelector(".tl-body");
       body.style.maxHeight = "none";
     });
-    animateSkills();
     setTimeout(() => window.print(), 150);
   });
 

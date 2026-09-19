@@ -35,22 +35,23 @@
 
   const RESPONSES = {
     about: [
-      "Jeffrey Shi — intelligence/SIGINT analyst.",
-      "Background in ETL/data engineering and cloud infrastructure",
-      "at ManTech and GDIT, on U.S. Government / IC programs.",
+      "Jeffrey Shi — cyber threat analyst & data scientist at GRVTY.",
+      "Network/SIGINT analysis, MITRE ATT&CK TTP mapping, and",
+      "LLM-driven triage workflows for U.S. IC cyber missions.",
+      "Background: 5 years as a data engineer at ManTech and GDIT.",
       "UVA — B.A. Computer Science & B.A. Statistics.",
     ],
     skills: [
-      "Python · SQL (Oracle/Postgres) · Kafka · Kubernetes",
-      "AWS (Certified Cloud Practitioner) · Docker · CI/CD",
-      "Intelligence / SIGINT analysis · cyber assessment tooling",
+      "MITRE ATT&CK · TTP analysis · network/SIGINT analysis",
+      "Python · SQL (PostgreSQL/Oracle) · Kafka · Kubernetes",
+      "LLM-driven workflows · Velociraptor · AWS",
     ],
     contact: [
       "email:    jeffreyshi430@gmail.com",
       "linkedin: linkedin.com/in/jeffrey-shi-24570150",
       "github:   github.com/js430",
     ],
-    whoami: ["guest — access level: public · clearance: none required"],
+    whoami: ["guest — you're browsing my site's terminal."],
   };
 
   const HELP = [
@@ -144,21 +145,6 @@
       case "download":
         printLines(["→ downloading resume PDF…"]);
         downloadResume();
-        break;
-      case "sudo":
-        if (/hire-me/.test(arg)) {
-          printLines(["Permission granted.", "→ opening a message to jeffreyshi430@gmail.com…"]);
-          setTimeout(() => (window.location.href = "mailto:jeffreyshi430@gmail.com"), 500);
-        } else {
-          printLines(["nice try. this isn't that kind of terminal."]);
-        }
-        break;
-      case "nmap":
-      case "scan":
-        printLines(["scanning… just kidding — this terminal doesn't touch the network."]);
-        break;
-      case "matrix":
-        printLines(["there is no spoon."]);
         break;
       case "clear":
         reset();
