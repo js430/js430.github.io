@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Personal Projects — Jeffrey Shi</title>
-  <meta name="description" content="Personal projects by Jeffrey Shi — Ava, a Discord bot with a statistical restock-forecasting engine, Claude Vision card identification, and more." />
+  <meta name="description" content="Personal projects by Jeffrey Shi — Ava, a Discord bot with statistical restock forecasting and an AI server auditor, plus Nexus Card Co, its companion web platform." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,20 +41,25 @@
             forecasts members actually use to plan store runs.
           </p>
           <p style="font-size:15px; margin-top:14px;">
-            It's grown into a small platform: moderation tooling, a raffle
-            system, a reputation leaderboard, onboarding automation, and a
-            live public dashboard — all running on a Postgres backend I
-            designed and operate myself.
+            It's grown into two connected products. Ava handles the Discord
+            side — moderation, raffles, reputation, onboarding, and now an
+            AI-assisted server-structure auditor. Its companion web app,
+            <strong style="color:var(--accent); font-weight:600;">Nexus Card Co</strong>,
+            is a role-gated dashboard with restock analytics, a card
+            portfolio tracker, and a grading ROI calculator (a standalone
+            paid tier is scaffolded in but not yet turned on). Same
+            Postgres database, two codebases, both on Railway.
           </p>
           <div class="hero-actions" style="margin-top:24px;">
             <a class="btn" href="https://discord.gg/FQAQ3DVdY7" target="_blank" rel="noopener">Join the server</a>
-            <a class="btn secondary" href="https://restock-dashboard-production.up.railway.app/" target="_blank" rel="noopener">View dashboard</a>
+            <a class="btn secondary" href="https://www.nexuscardco.com/" target="_blank" rel="noopener">Visit Nexus Card Co</a>
           </div>
         </div>
         <div class="panel">
-          <div class="fact-row"><span class="fact-label">Stack</span><span class="val">Python · discord.py · PostgreSQL (asyncpg)</span></div>
+          <div class="fact-row"><span class="fact-label">Stack</span><span class="val">Python · discord.py · FastAPI · PostgreSQL</span></div>
           <div class="fact-row"><span class="fact-label">Hosting</span><span class="val">Railway · CI/CD auto-deploy on push</span></div>
-          <div class="fact-row"><span class="fact-label">Scope</span><span class="val">30 cogs · 25 interactive UI views</span></div>
+          <div class="fact-row"><span class="fact-label">Bot</span><span class="val">46 cogs · 27 interactive views</span></div>
+          <div class="fact-row"><span class="fact-label">Web</span><span class="val">126 routes · 19 modules</span></div>
           <div class="fact-row"><span class="fact-label">Coverage</span><span class="val">9 sub-regions across VA / MD / DC</span></div>
           <div class="fact-row"><span class="fact-label">Source</span><span class="val">Closed — proprietary logic</span></div>
         </div>
@@ -63,9 +68,10 @@
 
     <section class="section" style="padding-top:0;">
       <p class="reveal" style="font-size:15px; color:var(--text-2); margin-bottom:32px; max-width:640px;">
-        A few pieces I'm most proud of — the rest is community infrastructure
-        (moderation, raffles, reputation, onboarding, calendars) that keeps
-        the server running smoothly.
+        A selection of what's shipped across both codebases — the rest is
+        community infrastructure (moderation, raffles, reputation,
+        onboarding, calendars) and product plumbing (billing, auth, admin
+        tooling) that keeps things running.
       </p>
 
       <div class="grid-2">
@@ -205,6 +211,105 @@
               <span class="chip">Vis.js</span>
               <span class="chip">Python</span>
               <span class="chip green">Graph Visualization</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">AVA · AUDIT</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>AI-Assisted Server Structure Audit</h3>
+            <p>
+              A Claude-backed way to answer "is this server actually
+              consistent?" One-shot mode builds a digest of channel/role
+              structure and activity counts, sends it in a single request,
+              and posts back what's actually wrong — prioritized, regional
+              asymmetry first. A conversational mode lets a mod @mention the
+              bot and ask questions; Claude picks its own tools to go look
+              things up, read-only, no changes made.
+            </p>
+            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
+              <li><strong style="color:var(--text);">Privacy by construction</strong> — never reads message content, only channel/role metadata and the bot's own tables; the one tool that touches history reads timestamps only.</li>
+              <li><strong style="color:var(--text);">Regional parity is the reason it exists</strong> — six regions are supposed to be structurally identical, and drift there breaks features silently rather than loudly.</li>
+              <li><strong style="color:var(--text);">Degrades gracefully</strong> — the conversational agent uses a beta SDK surface, so it's wrapped in an import guard; the one-shot audit keeps working even if that path doesn't.</li>
+            </ul>
+            <div class="case-meta">
+              <span class="chip">Claude Opus 5</span>
+              <span class="chip">Agentic Tool Use</span>
+              <span class="chip green">Privacy-First</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">NEXUS · GRADING</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Grading ROI Calculator</h3>
+            <p>
+              Answers one honest question per grade: if this card sells at
+              the going rate for that grade, what do you actually keep after
+              grading fees, shipping both ways, insurance, and marketplace
+              cuts — compared with just selling it raw today. Deliberately
+              skips the tempting-but-fake math: no probability of pulling a
+              10, no expected-value blending. A confident number built on a
+              guessed input is worse than no number.
+            </p>
+            <div class="case-meta">
+              <span class="chip">Python</span>
+              <span class="chip">Decimal Math</span>
+              <span class="chip green">Product Design</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">NEXUS · PORTFOLIO</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Card Portfolio &amp; Price Tracker</h3>
+            <p>
+              Lets members track what they actually own — lot by lot, not
+              averaged, since buying the same card twice at different prices
+              needs two rows to compute a real return. Every lot points at
+              one shared, deduplicated price catalog, so a card tracked by
+              three different members' portfolios still costs one price-API
+              credit a day, not three. All money is stored and computed as
+              Decimal, never float.
+            </p>
+            <div class="case-meta">
+              <span class="chip">FastAPI</span>
+              <span class="chip">PostgreSQL</span>
+              <span class="chip green">Cost-Basis Accounting</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">NEXUS · INVENTORY</span>
+            <span class="case-status dev">IN DEV</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Physical Inventory Pick System</h3>
+            <p>
+              A SKU-as-address system for a real seller's physical card
+              inventory: eBay's Custom Label field doubles as the storage
+              bin code, so the pick location arrives with every sale
+              automatically. A bin's fill level is computed from the cards
+              actually in it rather than a stored counter, so occupancy can
+              never silently drift out of sync with reality.
+            </p>
+            <div class="case-meta">
+              <span class="chip">PostgreSQL</span>
+              <span class="chip green">Systems Design</span>
             </div>
           </div>
         </article>
