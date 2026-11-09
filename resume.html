@@ -8,62 +8,56 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal, .hero-load { opacity: 1; transform: none; animation: none; }</style></noscript>
 </head>
 <body>
-  <nav class="nav">
-    <a class="nav-brand" href="index.html"><span class="brand-mark"></span>Jeffrey Shi</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="personal.html">Personal</a>
-      <a href="resume.html" class="active">Resume</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="mast-name" href="index.html">Jeffrey Shi</a>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="personal.html">Personal</a>
+        <a href="resume.html" class="active">Resume</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main class="container">
+  <main class="page">
+    <div class="col wide">
 
-    <!-- ============ RESUME HEADER ============ -->
-    <header class="dossier-header reveal">
-      <div class="dossier-main">
-        <div>
-          <h1>Jeffrey <span class="grad">Shi</span></h1>
-          <div class="role-line">Cyber Threat Analyst &amp; Data Scientist · U.S. Intelligence Community</div>
+      <!-- ============ RESUME HEADER ============ -->
+      <header class="page-title resume-head">
+        <h1 class="hero-load" style="animation-delay:0.05s">Jeffrey Shi</h1>
+        <p class="role-line hero-load" style="animation-delay:0.18s">Cyber threat analyst and data scientist, U.S. Intelligence Community</p>
+        <div class="actions hero-load" style="animation-delay:0.3s">
+          <a class="btn" id="dl-resume" href="assets/Jeffrey_Shi_Resume.pdf" download>Download PDF</a>
+          <button class="linkish" id="print-resume">Print or save as PDF</button>
+          <button class="linkish" id="expand-all">Expand all</button>
         </div>
-        <div class="dossier-stats">
-          <div class="stat"><div class="num" data-count="5">0</div><div class="lbl">Years Experience</div></div>
-          <div class="stat"><div class="num" data-count="3">0</div><div class="lbl">IC Programs</div></div>
-          <div class="stat"><div class="num" data-count="2">0</div><div class="lbl">B.A. Degrees</div></div>
-        </div>
+      </header>
+
+      <!-- ============ TAB NAV ============ -->
+      <div class="resume-tabs" id="resume-tabs">
+        <button class="active" data-pane="experience" data-cmd-target="experience">Experience</button>
+        <button data-pane="skills" data-cmd-target="skills">Skills</button>
+        <button data-pane="education" data-cmd-target="education">Education &amp; certifications</button>
       </div>
-      <div class="dossier-actions">
-        <a class="btn" id="dl-resume" href="assets/Jeffrey_Shi_Resume.pdf" download>Download PDF</a>
-        <button class="btn amber" id="print-resume">Print / Save as PDF</button>
-        <button class="btn secondary" id="expand-all">Expand all</button>
-      </div>
-    </header>
 
-    <!-- ============ TAB NAV ============ -->
-    <div class="resume-tabs" id="resume-tabs">
-      <button class="active" data-pane="experience" data-cmd-target="experience">Experience</button>
-      <button data-pane="skills" data-cmd-target="skills">Skills</button>
-      <button data-pane="education" data-cmd-target="education">Education &amp; Certs</button>
-    </div>
+      <!-- ============ EXPERIENCE ============ -->
+      <section class="resume-pane" id="pane-experience">
+        <div class="timeline">
 
-    <!-- ============ EXPERIENCE ============ -->
-    <section class="resume-pane" id="pane-experience">
-      <div class="timeline">
-
-        <div class="tl-entry open">
-          <div class="tl-card">
+          <div class="tl-entry open">
             <button class="tl-head">
               <span>
                 <span class="role">Data Scientist / Network Analyst</span>
-                <span class="org" style="display:block;">GRVTY — Tysons Corner, VA</span>
+                <span class="org">GRVTY, Tysons Corner, Va.</span>
               </span>
-              <span style="display:flex; align-items:center; gap:14px;">
-                <span class="dates">APR 2026 — PRESENT</span>
+              <span class="when">
+                <span class="dates">Apr 2026 – present</span>
                 <span class="caret">&#9656;</span>
               </span>
             </button>
@@ -75,26 +69,19 @@
                   <li>Built LLM-based workflows to triage and process large network-related datasets, cutting time from collection triage to finished report by 50%+ and enabling the team to produce more reporting over more data in the same period.</li>
                   <li>Design and stand up custom one-off applications that support day-to-day operations for the IC customer.</li>
                 </ul>
-                <div class="chips">
-                  <span class="chip green">MITRE ATT&amp;CK</span>
-                  <span class="chip green">Network &amp; SIGINT Analysis</span>
-                  <span class="chip">LLM Workflows</span>
-                  <span class="chip">Python</span>
-                </div>
+                <p class="kw"><b>Keywords:</b> MITRE ATT&amp;CK, network and SIGINT analysis, LLM workflows, Python</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="tl-entry">
-          <div class="tl-card">
+          <div class="tl-entry">
             <button class="tl-head">
               <span>
                 <span class="role">ETL / Data Engineer</span>
-                <span class="org" style="display:block;">ManTech — Herndon, VA</span>
+                <span class="org">ManTech, Herndon, Va.</span>
               </span>
-              <span style="display:flex; align-items:center; gap:14px;">
-                <span class="dates">NOV 2024 — APR 2026</span>
+              <span class="when">
+                <span class="dates">Nov 2024 – Apr 2026</span>
                 <span class="caret">&#9656;</span>
               </span>
             </button>
@@ -105,26 +92,19 @@
                   <li>Researched and built custom Velociraptor artifacts to collect host configuration data used to assess the security posture and compliance of assets and devices.</li>
                   <li>Wrote PostgreSQL maintenance scripts to eliminate database inefficiencies and resolve data issues affecting customer-facing UI components.</li>
                 </ul>
-                <div class="chips">
-                  <span class="chip">Python</span>
-                  <span class="chip">PostgreSQL</span>
-                  <span class="chip green">Velociraptor</span>
-                  <span class="chip green">Cyber Assessment</span>
-                </div>
+                <p class="kw"><b>Keywords:</b> Python, PostgreSQL, Velociraptor, cyber assessment</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="tl-entry">
-          <div class="tl-card">
+          <div class="tl-entry">
             <button class="tl-head">
               <span>
                 <span class="role">ETL / Data Engineer</span>
-                <span class="org" style="display:block;">General Dynamics Information Technology (GDIT) — McLean, VA</span>
+                <span class="org">General Dynamics Information Technology (GDIT), McLean, Va.</span>
               </span>
-              <span style="display:flex; align-items:center; gap:14px;">
-                <span class="dates">OCT 2023 — NOV 2024</span>
+              <span class="when">
+                <span class="dates">Oct 2023 – Nov 2024</span>
                 <span class="caret">&#9656;</span>
               </span>
             </button>
@@ -134,28 +114,19 @@
                   <li>Built and maintained asynchronous Python (asyncio) pipelines consuming Kafka topics and loading ~2.7M records/day (1B+ per year) into Oracle and PostgreSQL for a live IC mission data feed.</li>
                   <li>Helped migrate legacy Pentaho ETL jobs to a containerized Python framework on Kubernetes; refactored a FastAPI/Neo4j service to visualize end-to-end data flow.</li>
                 </ul>
-                <div class="chips">
-                  <span class="chip">Python</span>
-                  <span class="chip">asyncio</span>
-                  <span class="chip">Kafka</span>
-                  <span class="chip">Oracle / PostgreSQL</span>
-                  <span class="chip">Kubernetes</span>
-                  <span class="chip green">Neo4j</span>
-                </div>
+                <p class="kw"><b>Keywords:</b> Python, asyncio, Kafka, Oracle, PostgreSQL, Kubernetes, Neo4j</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="tl-entry">
-          <div class="tl-card">
+          <div class="tl-entry">
             <button class="tl-head">
               <span>
                 <span class="role">Cloud Developer / Engineer</span>
-                <span class="org" style="display:block;">General Dynamics Information Technology (GDIT) — McLean, VA</span>
+                <span class="org">General Dynamics Information Technology (GDIT), McLean, Va.</span>
               </span>
-              <span style="display:flex; align-items:center; gap:14px;">
-                <span class="dates">SEP 2022 — OCT 2023</span>
+              <span class="when">
+                <span class="dates">Sep 2022 – Oct 2023</span>
                 <span class="caret">&#9656;</span>
               </span>
             </button>
@@ -165,27 +136,19 @@
                   <li>Automated recurring web data collection with Python and Selenium, transforming results with pandas and loading them into an AWS RDS Oracle database for IC analysts and data scientists.</li>
                   <li>Built a monthly Python/SQL (cx_Oracle) validation job that flagged and corrected bad values across database tables.</li>
                 </ul>
-                <div class="chips">
-                  <span class="chip">AWS</span>
-                  <span class="chip">Python</span>
-                  <span class="chip">Selenium</span>
-                  <span class="chip">Oracle</span>
-                  <span class="chip">pandas</span>
-                </div>
+                <p class="kw"><b>Keywords:</b> AWS, Python, Selenium, Oracle, pandas</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="tl-entry">
-          <div class="tl-card">
+          <div class="tl-entry">
             <button class="tl-head">
               <span>
                 <span class="role">Frontend Developer / Product Delivery Lead</span>
-                <span class="org" style="display:block;">Accenture LLP — Boston, MA / Remote</span>
+                <span class="org">Accenture LLP, Boston, Mass. / remote</span>
               </span>
-              <span style="display:flex; align-items:center; gap:14px;">
-                <span class="dates">JUL 2021 — SEP 2022</span>
+              <span class="when">
+                <span class="dates">Jul 2021 – Sep 2022</span>
                 <span class="caret">&#9656;</span>
               </span>
             </button>
@@ -194,103 +157,57 @@
                 <ul>
                   <li>Frontend development and product delivery leadership for client engagements.</li>
                 </ul>
-                <div class="chips">
-                  <span class="chip">Frontend</span>
-                  <span class="chip">Product Delivery</span>
-                  <span class="chip">Agile</span>
-                </div>
+                <p class="kw"><b>Keywords:</b> frontend, product delivery, Agile</p>
               </div>
             </div>
           </div>
-        </div>
 
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <!-- ============ SKILLS ============ -->
-    <section class="resume-pane" id="pane-skills" hidden>
-      <div class="grid-2">
-        <div class="panel skill-group">
-          <h3>Threat Intelligence</h3>
-          <div class="chips">
-            <span class="chip green">MITRE ATT&amp;CK</span>
-            <span class="chip green">TTP Analysis</span>
-            <span class="chip green">Network &amp; SIGINT Analysis</span>
-            <span class="chip green">Packet &amp; Flow Analysis</span>
-            <span class="chip green">GOTS Analytic &amp; Targeting Tools</span>
-            <span class="chip green">Intelligence Reporting</span>
-          </div>
-        </div>
-        <div class="panel skill-group">
-          <h3>AI / LLM</h3>
-          <div class="chips">
-            <span class="chip green">LLM-Driven Triage &amp; Analysis Workflows</span>
-          </div>
-        </div>
-        <div class="panel skill-group">
-          <h3>Languages &amp; Data</h3>
-          <div class="chips">
-            <span class="chip">Python</span>
-            <span class="chip">SQL (PostgreSQL, Oracle)</span>
-            <span class="chip">Bash</span>
-            <span class="chip">pandas</span>
-            <span class="chip">Kafka</span>
-            <span class="chip">asyncio</span>
-            <span class="chip">FastAPI</span>
-            <span class="chip">Neo4j</span>
-            <span class="chip">Selenium</span>
-          </div>
-        </div>
-        <div class="panel skill-group">
-          <h3>Security Tools</h3>
-          <div class="chips">
-            <span class="chip amber">Velociraptor</span>
-            <span class="chip amber">Rapid7</span>
-            <span class="chip amber">Nmap</span>
-            <span class="chip amber">Titania Nipper</span>
-          </div>
-        </div>
-        <div class="panel skill-group">
-          <h3>Cloud &amp; DevOps</h3>
-          <div class="chips">
-            <span class="chip">AWS (RDS, EC2, S3)</span>
-            <span class="chip">Google Cloud (BigQuery, GKE)</span>
-            <span class="chip">Kubernetes</span>
-            <span class="chip">Docker</span>
-            <span class="chip">GitLab</span>
-            <span class="chip">Jenkins</span>
-          </div>
-        </div>
-      </div>
-    </section>
+      <!-- ============ SKILLS ============ -->
+      <section class="resume-pane" id="pane-skills" hidden>
+        <table class="bt">
+          <tbody>
+            <tr><th scope="row">Threat intelligence</th><td>MITRE ATT&amp;CK, TTP analysis, network and SIGINT analysis, packet and flow analysis, GOTS analytic and targeting tools, intelligence reporting</td></tr>
+            <tr><th scope="row">AI / LLM</th><td>LLM-driven triage and analysis workflows</td></tr>
+            <tr><th scope="row">Languages and data</th><td>Python, SQL (PostgreSQL, Oracle), Bash, pandas, Kafka, asyncio, FastAPI, Neo4j, Selenium</td></tr>
+            <tr><th scope="row">Security tools</th><td>Velociraptor, Rapid7, Nmap, Titania Nipper</td></tr>
+            <tr><th scope="row">Cloud and DevOps</th><td>AWS (RDS, EC2, S3), Google Cloud (BigQuery, GKE), Kubernetes, Docker, GitLab, Jenkins</td></tr>
+          </tbody>
+        </table>
+      </section>
 
-    <!-- ============ EDUCATION ============ -->
-    <section class="resume-pane" id="pane-education" hidden>
-      <div class="grid-2">
-        <div class="panel edu-card">
-          <div class="degree">B.A. Computer Science &amp; B.A. Statistics</div>
-          <div class="school">University of Virginia — Charlottesville, VA</div>
-          <div class="detail">Aug 2018 – May 2021 · Echols Scholar</div>
-        </div>
-        <div class="panel edu-card">
-          <div class="degree">AWS Certified Cloud Practitioner</div>
-          <div class="school">Amazon Web Services</div>
-          <div class="detail">Cloud fundamentals certification.</div>
-        </div>
-        <div class="panel edu-card">
-          <div class="degree">Chinese — Fluent</div>
-          <div class="school">Language Proficiency</div>
-          <div class="detail">Fluent in Chinese in addition to English.</div>
-        </div>
-      </div>
-    </section>
+      <!-- ============ EDUCATION ============ -->
+      <section class="resume-pane" id="pane-education" hidden>
+        <ul class="edu">
+          <li>
+            <div class="degree">B.A. Computer Science &amp; B.A. Statistics</div>
+            <div class="school">University of Virginia, Charlottesville, Va.</div>
+            <div class="detail">Aug 2018 – May 2021 · Echols Scholar</div>
+          </li>
+          <li>
+            <div class="degree">AWS Certified Cloud Practitioner</div>
+            <div class="school">Amazon Web Services</div>
+            <div class="detail">Cloud fundamentals certification.</div>
+          </li>
+          <li>
+            <div class="degree">Chinese — fluent</div>
+            <div class="school">Language proficiency</div>
+            <div class="detail">Fluent in Chinese in addition to English.</div>
+          </li>
+        </ul>
+      </section>
 
+    </div>
   </main>
 
-  <footer class="status-bar">
-    <span>&copy; 2026 Jeffrey Shi</span>
-    <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
-    <span id="utc-clock"></span>
+  <footer class="colophon">
+    <div class="colophon-inner">
+      <p>&copy; 2026 Jeffrey Shi. Set in STIX Two Text and Courier Prime; plain HTML, CSS and JavaScript, no build step.</p>
+      <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
+      <span id="utc-clock"></span>
+    </div>
   </footer>
 
   <button class="cmd-fab" id="cmd-fab">/ commands</button>

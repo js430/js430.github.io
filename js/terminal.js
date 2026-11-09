@@ -11,7 +11,6 @@
   overlay.innerHTML = `
     <div class="term-panel" role="dialog" aria-label="Hidden terminal">
       <div class="term-panel-head">
-        <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
         <span class="term-panel-title">guest@jeffreyshi:~$</span>
       </div>
       <div class="term-output" id="term-output"></div>
@@ -131,7 +130,7 @@
         setTimeout(() => (window.location.href = "index.html"), 300);
         break;
       case "projects":
-        printLines(["→ opening case files…"]);
+        printLines(["→ opening projects…"]);
         setTimeout(() => (window.location.href = "projects.html"), 300);
         break;
       case "personal":

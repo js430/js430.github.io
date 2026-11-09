@@ -1,4 +1,4 @@
-/* Resume page: tabs, timeline accordions, stat count-up, print */
+/* Resume page: tabs, timeline accordions, print */
 
 /* ---------- Tabs ---------- */
 (function tabs() {
@@ -43,29 +43,11 @@
         e.classList.toggle("open", anyClosed);
         setHeight(e);
       });
-      expandAll.innerHTML = anyClosed
-        ? "&#8863; COLLAPSE ALL SECTIONS"
-        : "&#8862; EXPAND ALL SECTIONS";
+      expandAll.textContent = anyClosed ? "Collapse all" : "Expand all";
     });
   }
 
   window.addEventListener("resize", () => entries.forEach(setHeight));
-})();
-
-/* ---------- Dossier stat count-up ---------- */
-(function stats() {
-  const nums = document.querySelectorAll(".stat .num[data-count]");
-  nums.forEach((el) => {
-    const target = parseInt(el.dataset.count, 10);
-    const duration = 900;
-    const start = performance.now();
-    function frame(t) {
-      const p = Math.min((t - start) / duration, 1);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  });
 })();
 
 /* ---------- Print / save as PDF ---------- */
@@ -73,7 +55,7 @@
   const btn = document.getElementById("print-resume");
   if (!btn) return;
   btn.addEventListener("click", () => {
-    // reveal all panes and entries so the printed dossier is complete
+    // reveal all panes and entries so the printed resume is complete
     document.querySelectorAll(".resume-pane").forEach((p) => (p.hidden = false));
     document.querySelectorAll(".tl-entry").forEach((e) => {
       e.classList.add("open");

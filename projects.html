@@ -8,200 +8,175 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal, .hero-load { opacity: 1; transform: none; animation: none; }</style></noscript>
 </head>
 <body>
-  <nav class="nav">
-    <a class="nav-brand" href="index.html"><span class="brand-mark"></span>Jeffrey Shi</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="projects.html" class="active">Projects</a>
-      <a href="personal.html">Personal</a>
-      <a href="resume.html">Resume</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="mast-name" href="index.html">Jeffrey Shi</a>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="personal.html">Personal</a>
+        <a href="resume.html">Resume</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main class="container">
+  <main class="page">
+    <div class="col">
 
-    <section class="section">
-      <div class="section-header reveal">
-        <span class="tag">02</span>
-        <h2 data-scramble>Projects</h2>
-        <div class="rule"></div>
-      </div>
-      <p class="reveal" style="font-size:15px; color:var(--text-2); margin:-20px 0 36px; max-width:640px;">
-        Selected technical work across IC and government programs. Customer systems
-        are internal, so there's no public source — each card is the shape of the
-        problem and how it was solved.
-      </p>
+      <header class="page-title">
+        <h1 class="hero-load" style="animation-delay:0.05s">Projects</h1>
+        <p class="standfirst hero-load" style="animation-delay:0.18s">
+          Selected technical work across IC and government programs.
+          Customer systems are internal, so there's no public source. Each
+          entry is the shape of the problem and how it was solved.
+        </p>
+      </header>
 
-      <div class="grid-2">
+      <div class="entries">
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">GRVTY</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>LLM-Driven Cyber Triage Workflows</h3>
-            <p>
-              Built LLM-based workflows to triage and process large network-related
-              datasets for a USIC agency — cutting time from collection triage to
-              finished report by 50%+ and letting the team produce more reporting
-              over more data in the same period.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip green">LLM Workflows</span>
-              <span class="chip green">Automation</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>LLM-Driven Cyber Triage Workflows</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>GRVTY</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>Python</dd>
+              <dt>Keywords</dt><dd>LLM workflows, automation</dd>
+            </dl>
+          </aside>
+          <p>
+            Built LLM-based workflows to triage and process large
+            network-related datasets for a USIC agency — cutting time from
+            collection triage to finished report by more than half and
+            letting the team produce more reporting over more data in the
+            same period.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">ManTech</span>
-            <span class="case-status archived">DELIVERED</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Multi-Scanner ETL Pipeline</h3>
-            <p>
-              Modular Python ETL pipelines that parse and normalize output from 5+
-              industry-standard security scanners — Titania Nipper, Rapid7, Nmap,
-              and others — for ingest into an IC cyber assessment platform. Built
-              the Titania Nipper module end to end.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">PostgreSQL</span>
-              <span class="chip green">ETL</span>
-              <span class="chip green">Cyber Assessment</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>Multi-Scanner ETL Pipeline</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>ManTech</dd>
+              <dt>Status</dt><dd>Delivered</dd>
+              <dt>Built with</dt><dd>Python, PostgreSQL</dd>
+              <dt>Keywords</dt><dd>ETL, cyber assessment</dd>
+            </dl>
+          </aside>
+          <p>
+            Modular Python ETL pipelines that parse and normalize output
+            from five or more industry-standard security scanners — Titania
+            Nipper, Rapid7, Nmap, and others — for ingest into an IC cyber
+            assessment platform. Built the Titania Nipper module end to end.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">ManTech</span>
-            <span class="case-status archived">DELIVERED</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Velociraptor Artifact Development</h3>
-            <p>
-              Researched and built custom Velociraptor artifacts to collect host
-              configuration data, used to assess the security posture and compliance
-              of assets and devices across an IC customer's environment.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Velociraptor</span>
-              <span class="chip">VQL</span>
-              <span class="chip green">DFIR</span>
-              <span class="chip green">Compliance</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>Velociraptor Artifact Development</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>ManTech</dd>
+              <dt>Status</dt><dd>Delivered</dd>
+              <dt>Built with</dt><dd>Velociraptor, VQL</dd>
+              <dt>Keywords</dt><dd>DFIR, compliance</dd>
+            </dl>
+          </aside>
+          <p>
+            Researched and built custom Velociraptor artifacts to collect
+            host configuration data, used to assess the security posture and
+            compliance of assets and devices across an IC customer's
+            environment.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">GDIT</span>
-            <span class="case-status archived">DELIVERED</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Kafka &rarr; Oracle/Postgres ETL Migration</h3>
-            <p>
-              For a live IC mission data feed: asynchronous Python (asyncio)
-              pipelines consuming Kafka topics and loading ~2.7M records/day —
-              over 1B per year — into Oracle and PostgreSQL. Part of migrating a
-              legacy Pentaho ETL stack to a Python- and Kubernetes-centered
-              architecture.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">asyncio</span>
-              <span class="chip">Kafka</span>
-              <span class="chip">Oracle</span>
-              <span class="chip">Kubernetes</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>Kafka to Oracle/Postgres ETL Migration</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>GDIT</dd>
+              <dt>Status</dt><dd>Delivered</dd>
+              <dt>Built with</dt><dd>Python, asyncio, Kafka, Oracle, Kubernetes</dd>
+            </dl>
+          </aside>
+          <p>
+            For a live IC mission data feed: asynchronous Python (asyncio)
+            pipelines consuming Kafka topics and loading about 2.7 million
+            records a day — over a billion per year — into Oracle and
+            PostgreSQL. Part of migrating a legacy Pentaho ETL stack to a
+            Python- and Kubernetes-centered architecture.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">GDIT</span>
-            <span class="case-status archived">DELIVERED</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>ETL Data-Flow Graph Visualization</h3>
-            <p>
-              Refactored and improved a custom FastAPI application feeding Neo4j, giving
-              the customer a live graph visualization of every ETL process and data flow
-              in the system — link analysis, but for pipelines.
-            </p>
-            <div class="case-meta">
-              <span class="chip">FastAPI</span>
-              <span class="chip">Neo4j</span>
-              <span class="chip">Python</span>
-              <span class="chip green">Graph Viz</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>ETL Data-Flow Graph Visualization</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>GDIT</dd>
+              <dt>Status</dt><dd>Delivered</dd>
+              <dt>Built with</dt><dd>FastAPI, Neo4j, Python</dd>
+              <dt>Keywords</dt><dd>Graph visualization</dd>
+            </dl>
+          </aside>
+          <p>
+            Refactored and improved a custom FastAPI application feeding
+            Neo4j, giving the customer a live graph visualization of every
+            ETL process and data flow in the system — link analysis, but for
+            pipelines.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">GDIT</span>
-            <span class="case-status archived">ARCHIVED</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Automated Web-Scraping Ingest</h3>
-            <p>
-              Automated recurring data collection for a government analytics team:
-              Selenium WebDriver scraping formatted into pandas dataframes and written to
-              an AWS-hosted Oracle database for downstream data scientists, plus monthly
-              scripted data-integrity validation via cx_Oracle.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Selenium</span>
-              <span class="chip">pandas</span>
-              <span class="chip">Oracle</span>
-              <span class="chip">AWS</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>Automated Web-Scraping Ingest</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>GDIT</dd>
+              <dt>Status</dt><dd>Archived</dd>
+              <dt>Built with</dt><dd>Selenium, pandas, Oracle, AWS</dd>
+            </dl>
+          </aside>
+          <p>
+            Automated recurring data collection for a government analytics
+            team: Selenium WebDriver scraping formatted into pandas
+            dataframes and written to an AWS-hosted Oracle database for
+            downstream data scientists, plus monthly scripted data-integrity
+            validation via cx_Oracle.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">Personal</span>
-            <span class="case-status dev">IN DEV</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>This Website</h3>
-            <p>
-              The site you're looking at: dependency-free static HTML/CSS/JS — a
-              Three.js signals globe on the hero, a command palette
-              (press <span style="color:var(--accent); font-family:var(--mono);">/</span>),
-              and an interactive resume with a print-clean stylesheet.
-            </p>
-            <div class="case-meta">
-              <span class="chip">HTML/CSS</span>
-              <span class="chip">JavaScript</span>
-              <span class="chip green">Design</span>
-            </div>
-            <div class="case-links">
-              <a href="https://github.com/js430/js430.github.io" target="_blank" rel="noopener">[ source ]</a>
-            </div>
-          </div>
+        <article class="entry has-mn reveal">
+          <h2 class="entry-title" data-scramble>This Website</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>For</dt><dd>Myself</dd>
+              <dt>Status</dt><dd>Ongoing</dd>
+              <dt>Built with</dt><dd>HTML, CSS, JavaScript</dd>
+              <dt>Source</dt><dd><a href="https://github.com/js430/js430.github.io" target="_blank" rel="noopener">GitHub</a></dd>
+            </dl>
+          </aside>
+          <p>
+            The site you're looking at: static HTML, CSS and JavaScript with
+            no dependencies and no build step. A line-drawn globe on a 2D
+            canvas, a command palette (press <kbd>/</kbd>), a terminal
+            behind the <kbd>`</kbd> key, and a resume that prints cleanly.
+          </p>
         </article>
 
       </div>
-    </section>
 
+    </div>
   </main>
 
-  <footer class="status-bar">
-    <span>&copy; 2026 Jeffrey Shi</span>
-    <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
-    <span id="utc-clock"></span>
+  <footer class="colophon">
+    <div class="colophon-inner">
+      <p>&copy; 2026 Jeffrey Shi. Set in STIX Two Text and Courier Prime; plain HTML, CSS and JavaScript, no build step.</p>
+      <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
+      <span id="utc-clock"></span>
+    </div>
   </footer>
 
   <button class="cmd-fab" id="cmd-fab">/ commands</button>

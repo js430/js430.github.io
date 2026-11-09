@@ -3,33 +3,34 @@
 **Live at https://js430.github.io/** (GitHub Pages user site, `main` branch —
 push to deploy; `.nojekyll` keeps the build a plain file copy).
 
-Static personal site in the "Nord Ops" design — the [Nord](https://www.nordtheme.com/)
-editor/terminal palette with editorial serif headlines (Newsreader), Public Sans body,
-and JetBrains Mono for data/labels. No build step; the only third-party requests are
-Google Fonts (styles only). Three.js is vendored into `js/vendor/three/` — no CDN
-script execution.
+Static personal site laid out like a typeset technical report: ink on warm paper, one
+spot colour, STIX Two Text for reading and Courier Prime for data. Numbered sections,
+margin notes and ruled tables instead of cards and chips. No build step and no
+JavaScript dependencies; the only third-party requests are Google Fonts (styles only).
 
 ## Pages
 
 | Page | File | Notes |
 |------|------|-------|
-| Home | `index.html` | Hero with 3D signals globe, about, capability domains, contact |
-| Projects | `projects.html` | Professional work as "case files" (IC/government programs) |
-| Personal | `personal.html` | Ava Discord bot — callouts, forecasting, card vision, alerts |
-| Resume | `resume.html` | Interactive resume: tabs, expandable timeline, skills, PDF download |
+| Home | `index.html` | Title block with the ink-line globe (Fig. 1), about, what I do, contact |
+| Projects | `projects.html` | Professional work as numbered entries with margin specs |
+| Personal | `personal.html` | Ava Discord bot and Nexus Card Co — contents list, 13 entries |
+| Resume | `resume.html` | Interactive resume: tabs, expandable timeline, skills table, PDF download |
 
 ## Features
 
-- 3D wireframe "signals globe" hero (Three.js r160, vendored; bloom, atmosphere
-  shader, starfield) — desktop only, skipped for `prefers-reduced-motion`
-- Orchestrated staggered hero load-in; cipher-scramble headings on scroll reveal
+- Wireframe globe drawn on a 2D canvas (`js/globe.js`, no WebGL or libraries): graticule,
+  hatched shadow, animated great-circle arcs, drag to turn. Static for
+  `prefers-reduced-motion`; paused off-screen. Text wraps the circle via `shape-outside`.
+- Staggered load-in on the title block; cipher-scramble headings on scroll reveal;
+  typing rotation on the home role line
 - Command palette: press `/` anywhere (`help`, `projects`, `personal`, `resume`,
   `download`, `terminal`…)
-- Hidden terminal easter egg: press `` ` `` — canned client-side shell with
-  navigation, resume download, `about`/`skills`/`contact`/`whoami`
-- Resume: tabbed sections, expandable timeline, stat count-ups, and a clean white
-  print stylesheet so print-to-PDF produces a readable paper resume
-- Live UTC clock
+- Hidden terminal: press `` ` `` — canned client-side shell with navigation, resume
+  download, `about`/`skills`/`contact`/`whoami`
+- Resume: tabbed sections, expandable timeline, and a print stylesheet so print-to-PDF
+  produces a clean paper resume
+- Live UTC clock in the colophon
 
 ## Content status
 

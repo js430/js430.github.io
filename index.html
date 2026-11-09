@@ -8,163 +8,152 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Three.js r160 vendored locally (js/vendor/three/) — no third-party
-       script execution, no CDN supply-chain or availability dependency. -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "./js/vendor/three/three.module.min.js",
-      "three/addons/": "./js/vendor/three/addons/"
-    }
-  }
-  </script>
+  <noscript><style>.reveal, .hero-load { opacity: 1; transform: none; animation: none; }</style></noscript>
 </head>
 <body>
-  <nav class="nav">
-    <a class="nav-brand" href="index.html"><span class="brand-mark"></span>Jeffrey Shi</a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="personal.html">Personal</a>
-      <a href="resume.html">Resume</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="mast-name" href="index.html">Jeffrey Shi</a>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="index.html" class="active">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="personal.html">Personal</a>
+        <a href="resume.html">Resume</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main class="container">
+  <main class="page">
+    <div class="col">
 
-    <!-- ================= HERO ================= -->
-    <section class="hero">
-      <div>
-        <p class="eyebrow hero-load" style="animation-delay:0.05s"><span class="tick">//</span> Threat Intelligence &nbsp;×&nbsp; Data Science</p>
-        <h1 class="hero-name hero-load" style="animation-delay:0.16s">Jeffrey <span class="grad">Shi</span></h1>
-        <div class="hero-role hero-load" style="animation-delay:0.3s"><span id="type-target" data-phrases='["Cyber Threat Analyst","Data Scientist","Network Analyst","ETL / Data Engineer"]'></span><span class="cursor"></span></div>
-        <p class="hero-sub hero-load" style="animation-delay:0.42s">
-          I analyze network and SIGINT data to identify adversary cyber activity for
-          U.S. Intelligence Community cyber missions, mapping tradecraft to MITRE
-          ATT&amp;CK. My background in ETL and data engineering is also why I build
-          LLM-driven workflows — cutting triage-to-report time by more than half
-          instead of doing it by hand.
+      <!-- ================= TITLE BLOCK ================= -->
+      <header class="title-block">
+        <figure class="fig-globe hero-load" style="animation-delay:0.5s">
+          <canvas id="globe-canvas" aria-hidden="true"></canvas>
+          <figcaption>
+            <span class="fig-n">Fig. 1.</span> A wireframe globe, drawn on a
+            plain 2D canvas. The arcs are decoration, not data. It turns if
+            you drag it.
+          </figcaption>
+        </figure>
+
+        <h1 class="hero-load" style="animation-delay:0.05s">Jeffrey Shi</h1>
+        <p class="role hero-load" style="animation-delay:0.18s"><span id="type-target" data-phrases='["Cyber threat analyst","Data scientist","Network analyst","ETL / data engineer"]'></span><span class="cursor"></span></p>
+        <p class="hero-load" style="animation-delay:0.3s">
+          <span class="runin">Summary.</span>I analyze network and SIGINT
+          data to identify adversary cyber activity for U.S. Intelligence
+          Community cyber missions, mapping tradecraft to MITRE ATT&amp;CK.
+          My background in ETL and data engineering is also why I build
+          LLM-driven workflows — cutting triage-to-report time by more than
+          half instead of doing it by hand.
         </p>
-        <div class="hero-actions hero-load" style="animation-delay:0.54s">
-          <a class="btn" href="projects.html">View projects</a>
-          <a class="btn amber" href="resume.html">Open resume</a>
-          <a class="btn secondary" href="#contact">Contact</a>
-        </div>
-      </div>
-      <div class="hero-3d" id="hero-3d" aria-hidden="true">
-        <canvas id="globe-canvas"></canvas>
-      </div>
-    </section>
-
-    <!-- ================= ABOUT ================= -->
-    <section class="section" id="about">
-      <div class="section-header reveal">
-        <span class="tag">01</span>
-        <h2 data-scramble>About</h2>
-        <div class="rule"></div>
-      </div>
-      <div class="grid-2">
-        <div class="panel reveal">
-          <p style="font-size:15px;">
-            I'm a cyber threat analyst and data scientist supporting U.S. Intelligence
-            Community cyber missions at
-            <strong style="color:var(--accent); font-weight:600;">GRVTY</strong> —
-            analyzing network and SIGINT data, mapping adversary tradecraft to MITRE
-            ATT&amp;CK, and building LLM-driven workflows that cut investigation-to-report
-            time by more than half.
-          </p>
-          <p style="font-size:15px; margin-top:14px;">
-            That analysis work is built on five years as a data engineer — ETL
-            pipelines, cloud infrastructure, and cyber-assessment tooling at ManTech
-            and GDIT. I automate the repetitive parts of tradecraft so the human
-            judgment goes where it actually matters.
-          </p>
-        </div>
-        <div class="panel reveal">
-          <div class="fact-row"><span class="fact-label">Focus</span><span class="val">Cyber threat intelligence &amp; data science</span></div>
-          <div class="fact-row"><span class="fact-label">Discipline</span><span class="val">Network &amp; SIGINT analysis, MITRE ATT&amp;CK</span></div>
-          <div class="fact-row"><span class="fact-label">Foundation</span><span class="val">ETL / data engineering · cloud (AWS)</span></div>
-          <div class="fact-row"><span class="fact-label">Education</span><span class="val">UVA — B.A. Computer Science &amp; B.A. Statistics</span></div>
-          <div class="fact-row"><span class="fact-label">Languages</span><span class="val">Python, SQL (PostgreSQL/Oracle) · Chinese (fluent)</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CAPABILITIES ================= -->
-    <section class="section" id="capabilities">
-      <div class="section-header reveal">
-        <span class="tag">02</span>
-        <h2 data-scramble>What I do</h2>
-        <div class="rule"></div>
-      </div>
-      <div class="grid-3">
-        <div class="domain-card reveal">
-          <div class="icon">TTP</div>
-          <h3 data-scramble>Threat Intelligence</h3>
-          <p>Network and SIGINT analysis, MITRE ATT&amp;CK-based TTP mapping, and
-             packet/flow analysis to identify adversary cyber activity for IC
-             cyber missions.</p>
-          <div class="chips">
-            <span class="chip green">MITRE ATT&amp;CK</span>
-            <span class="chip green">Network Analysis</span>
-            <span class="chip green">SIGINT</span>
-          </div>
-        </div>
-        <div class="domain-card reveal">
-          <div class="icon">ETL</div>
-          <h3 data-scramble>Data Engineering</h3>
-          <p>Pipelines that don't fall over: async Python ETL from Kafka topics into
-             Oracle, Postgres, and Neo4j — including migrating legacy stacks to
-             Python + Kubernetes architectures.</p>
-          <div class="chips">
-            <span class="chip">Python</span>
-            <span class="chip">Kafka</span>
-            <span class="chip">Oracle / Postgres</span>
-            <span class="chip">Kubernetes</span>
-          </div>
-        </div>
-        <div class="domain-card reveal">
-          <div class="icon">LLM</div>
-          <h3 data-scramble>AI-Assisted Security Tooling</h3>
-          <p>LLM-driven workflows that cut collection-to-report time by 50%+, plus
-             endpoint tooling — custom Velociraptor artifacts and ETL across 5+
-             industry security scanners.</p>
-          <div class="chips">
-            <span class="chip amber">LLM Workflows</span>
-            <span class="chip amber">Velociraptor</span>
-            <span class="chip amber">Rapid7</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CONTACT ================= -->
-    <section class="section" id="contact">
-      <div class="section-header reveal">
-        <span class="tag">03</span>
-        <h2 data-scramble>Contact</h2>
-        <div class="rule"></div>
-      </div>
-      <div class="panel reveal" style="text-align:center; padding:48px 30px;">
-        <p style="font-size:15px; color:var(--text-2); margin-bottom:28px;">
-          The fastest channel is email — I read everything.
+        <p class="jump hero-load" style="animation-delay:0.42s">
+          <a href="projects.html">Selected work</a>
+          <a href="resume.html">Resume</a>
+          <a href="#contact">Contact</a>
         </p>
-        <div class="contact-strip">
-          <a class="btn" href="mailto:jeffreyshi430@gmail.com">Email</a>
-          <a class="btn secondary" href="https://www.linkedin.com/in/jeffrey-shi-24570150/" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn secondary" href="https://github.com/js430" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
-    </section>
+      </header>
 
+      <!-- ================= ABOUT ================= -->
+      <section class="sec" id="about">
+        <h2 class="reveal" data-scramble>About</h2>
+        <div class="has-mn reveal">
+          <p>
+            I work at <strong>GRVTY</strong>, supporting U.S. Intelligence
+            Community cyber missions. That analysis work is built on five
+            years as a data engineer — ETL pipelines, cloud infrastructure,
+            and cyber-assessment tooling at ManTech and GDIT. I automate the
+            repetitive parts of tradecraft so the human judgment goes where
+            it actually matters.
+          </p>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Now</dt><dd>GRVTY, Tysons Corner, Va.</dd>
+              <dt>Since</dt><dd>April 2026</dd>
+              <dt>Before</dt><dd>ManTech, GDIT, Accenture</dd>
+            </dl>
+          </aside>
+        </div>
+
+        <table class="bt reveal">
+          <caption><b>Table 1.</b> At a glance.</caption>
+          <tbody>
+            <tr><th scope="row">Focus</th><td>Cyber threat intelligence and data science</td></tr>
+            <tr><th scope="row">Discipline</th><td>Network and SIGINT analysis, MITRE ATT&amp;CK</td></tr>
+            <tr><th scope="row">Foundation</th><td>ETL and data engineering; cloud (AWS)</td></tr>
+            <tr><th scope="row">Education</th><td>University of Virginia — B.A. Computer Science, B.A. Statistics</td></tr>
+            <tr><th scope="row">Languages</th><td>Python, SQL (PostgreSQL, Oracle); Chinese (fluent)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ================= WHAT I DO ================= -->
+      <section class="sec" id="capabilities">
+        <h2 class="reveal" data-scramble>What I do</h2>
+
+        <div class="sub has-mn reveal">
+          <h3 data-scramble>Threat intelligence</h3>
+          <p>
+            Network and SIGINT analysis, MITRE ATT&amp;CK-based TTP
+            mapping,<span class="ref">1</span> and packet and flow analysis
+            to identify adversary cyber activity for IC cyber missions.
+          </p>
+          <aside class="mn">
+            <sup>1</sup> ATT&amp;CK is a public catalogue of adversary
+            tactics and techniques. Mapping activity to it keeps reporting
+            comparable from one team to the next.
+          </aside>
+        </div>
+
+        <div class="sub reveal">
+          <h3 data-scramble>Data engineering</h3>
+          <p>
+            Pipelines that don't fall over: async Python ETL from Kafka
+            topics into Oracle, Postgres, and Neo4j — including migrating
+            legacy stacks to Python and Kubernetes architectures.
+          </p>
+        </div>
+
+        <div class="sub has-mn reveal">
+          <h3 data-scramble>AI-assisted security tooling</h3>
+          <p>
+            LLM-driven workflows that cut collection-to-report time by more
+            than half, plus endpoint tooling: custom Velociraptor
+            artifacts<span class="ref">2</span> and ETL across five or more
+            industry security scanners, Rapid7 and Nmap among them.
+          </p>
+          <aside class="mn">
+            <sup>2</sup> Velociraptor is an open-source endpoint collection
+            and forensics tool. An artifact is a packaged query written in
+            its own language, VQL.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ================= CONTACT ================= -->
+      <section class="sec" id="contact">
+        <h2 class="reveal" data-scramble>Contact</h2>
+        <p class="reveal">The fastest channel is email — I read everything.</p>
+        <table class="bt reveal">
+          <tbody>
+            <tr><th scope="row">Email</th><td><a href="mailto:jeffreyshi430@gmail.com">jeffreyshi430@gmail.com</a></td></tr>
+            <tr><th scope="row">LinkedIn</th><td><a href="https://www.linkedin.com/in/jeffrey-shi-24570150/" target="_blank" rel="noopener">linkedin.com/in/jeffrey-shi-24570150</a></td></tr>
+            <tr><th scope="row">GitHub</th><td><a href="https://github.com/js430" target="_blank" rel="noopener">github.com/js430</a></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
   </main>
 
-  <footer class="status-bar">
-    <span>&copy; 2026 Jeffrey Shi</span>
-    <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
-    <span id="utc-clock"></span>
+  <footer class="colophon">
+    <div class="colophon-inner">
+      <p>&copy; 2026 Jeffrey Shi. Set in STIX Two Text and Courier Prime; plain HTML, CSS and JavaScript, no build step.</p>
+      <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
+      <span id="utc-clock"></span>
+    </div>
   </footer>
 
   <!-- Command palette -->
@@ -179,6 +168,6 @@
 
   <script src="js/main.js"></script>
   <script src="js/terminal.js"></script>
-  <script type="module" src="js/globe.js"></script>
+  <script src="js/globe.js"></script>
 </body>
 </html>

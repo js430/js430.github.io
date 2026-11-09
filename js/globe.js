@@ -1,331 +1,278 @@
-/* Hero 3D centerpiece — an enhanced "signals globe": a textured, lit
-   sphere (procedural surface — no external texture/model files) under
-   a schematic wireframe overlay, with glowing collection points,
-   animated arcs, a fresnel atmosphere rim glow, a starfield, and real
-   bloom post-processing via Three.js's official addons.
-
-   Three.js r160 and its postprocessing addons are vendored into
-   js/vendor/three/ and resolved via the import map in index.html —
-   zero build step and zero third-party script execution.
-
-   Desktop-only, skipped for prefers-reduced-motion, and fails silently
-   if the modules can't load — the 2D particle canvas (js/main.js) is
-   always the universal fallback, on every page and every device. */
-(async function heroGlobe() {
-  const container = document.getElementById("hero-3d");
+/* Fig. 1 on the home page: a wireframe globe drawn as ink line work on a
+   plain 2D canvas — an orthographic projection of a graticule, hatched on
+   the shadow side, with a few great-circle arcs in the spot colour.
+   No WebGL and no libraries. The arcs are decoration, not data. */
+(function inkGlobe() {
   const canvas = document.getElementById("globe-canvas");
-  if (!container || !canvas) return;
+  if (!canvas || !canvas.getContext) return;
+  const ctx = canvas.getContext("2d");
 
+  const css = getComputedStyle(document.documentElement);
+  const INK = css.getPropertyValue("--ink").trim() || "#1c1a16";
+  const RUBRIC = css.getPropertyValue("--rubric").trim() || "#a8281c";
+  const PAPER = css.getPropertyValue("--paper").trim() || "#f5f0e6";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const wideEnough = window.matchMedia("(min-width: 900px)").matches;
-  if (reduceMotion || !wideEnough) return;
 
-  let THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass;
-  try {
-    THREE = await import("three");
-    ({ EffectComposer } = await import("three/addons/postprocessing/EffectComposer.js"));
-    ({ RenderPass }     = await import("three/addons/postprocessing/RenderPass.js"));
-    ({ UnrealBloomPass } = await import("three/addons/postprocessing/UnrealBloomPass.js"));
-    ({ OutputPass }      = await import("three/addons/postprocessing/OutputPass.js"));
-  } catch (e) {
-    return; // modules failed to load — fail silently, the 2D background already covers the page
+  const RAD = Math.PI / 180;
+  const TAU = Math.PI * 2;
+
+  let W = 0, cx = 0, cy = 0, R = 0;
+  let rot = -0.7;    // spin about the polar axis
+  let tilt = 0.38;   // pole tipped toward the viewer
+
+  /* ---- geometry, computed once as unit vectors ---- */
+  function vec(latDeg, lonDeg) {
+    const lat = latDeg * RAD, lon = lonDeg * RAD, cl = Math.cos(lat);
+    return [cl * Math.sin(lon), Math.sin(lat), cl * Math.cos(lon)];
   }
 
-  const ACCENT  = 0x88c0d0; // Nord8 frost cyan
-  const ACCENT2 = 0xb48ead; // Nord15 aurora purple
-  const BG      = 0x1c2027;
-
-  const R           = 1.6;
-  const POINT_COUNT = 20;
-  const ARC_COUNT   = 13;
-
-  // ---------- renderer / scene / camera ----------
-  // No alpha: the scene has an opaque background (UnrealBloomPass drops
-  // alpha in its composite anyway, so transparency could never work here).
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-  const scene  = new THREE.Scene();
-  // UnrealBloomPass doesn't preserve alpha through its blur composite, so a
-  // transparent canvas background renders as an opaque black square once
-  // bloom is in the pipeline. Match the page background instead — it reads
-  // as seamless since the hero area is already this exact near-black tone.
-  scene.background = new THREE.Color(BG);
-  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-  camera.position.set(0, 0, 6.4);
-  camera.lookAt(0, 0, 0);
-
-  const group = new THREE.Group();
-  scene.add(group);
-
-  // ---------- lighting (gives the surface a real day/night gradient) ----------
-  const keyLight = new THREE.DirectionalLight(0xffffff, 1.6);
-  keyLight.position.set(4, 2.2, 5);
-  scene.add(keyLight);
-  const ambient = new THREE.AmbientLight(0x2a3a5a, 0.55);
-  scene.add(ambient);
-
-  // ---------- procedural glow-sprite texture (points, pulses, core) ----------
-  function glowTexture(hex) {
-    const size = 128;
-    const c = document.createElement("canvas");
-    c.width = c.height = size;
-    const ctx = c.getContext("2d");
-    const r = size / 2;
-    const col = new THREE.Color(hex);
-    const rgb = `${Math.round(col.r * 255)}, ${Math.round(col.g * 255)}, ${Math.round(col.b * 255)}`;
-    const grad = ctx.createRadialGradient(r, r, 0, r, r, r);
-    grad.addColorStop(0, `rgba(${rgb}, 1)`);
-    grad.addColorStop(0.4, `rgba(${rgb}, 0.55)`);
-    grad.addColorStop(1, `rgba(${rgb}, 0)`);
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, size, size);
-    return new THREE.CanvasTexture(c);
+  const meridians = [];
+  for (let lon = 0; lon < 360; lon += 20) {
+    const line = [];
+    for (let lat = -90; lat <= 90; lat += 3) line.push(vec(lat, lon));
+    meridians.push(line);
   }
-  const pointGlowTex = glowTexture(ACCENT);
-  const pulseGlowTex = glowTexture(ACCENT2);
+  const parallels = [];
+  for (let lat = -60; lat <= 60; lat += 20) {
+    const line = [];
+    for (let lon = 0; lon <= 360; lon += 3) line.push(vec(lat, lon));
+    parallels.push({ line, equator: lat === 0 });
+  }
 
-  const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: pointGlowTex, color: ACCENT, transparent: true, opacity: 0.4,
-    depthWrite: false, blending: THREE.AdditiveBlending,
-  }));
-  coreGlow.scale.set(R * 3.4, R * 3.4, 1);
-  scene.add(coreGlow);
+  // Arbitrary points, picked for spacing. They don't mark anything.
+  const nodes = [
+    [52, -8], [38, -77], [-12, -52], [61, 44], [24, 88],
+    [-31, 131], [8, 12], [44, 141], [-42, -160], [71, -128],
+  ].map(([la, lo]) => vec(la, lo));
 
-  // ---------- procedural surface texture: dark ocean + soft landmass blobs + graticule ----------
-  function makeSurfaceTexture() {
-    const w = 1024, h = 512;
-    const c = document.createElement("canvas");
-    c.width = w; c.height = h;
-    const ctx = c.getContext("2d");
-
-    const base = ctx.createLinearGradient(0, 0, 0, h);
-    base.addColorStop(0, "#11141a");
-    base.addColorStop(0.5, "#1b2330");
-    base.addColorStop(1, "#11141a");
-    ctx.fillStyle = base;
-    ctx.fillRect(0, 0, w, h);
-
-    function blob(cx, cy, r, alpha) {
-      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, `rgba(76, 86, 106, ${alpha})`);
-      g.addColorStop(0.7, `rgba(76, 86, 106, ${alpha * 0.5})`);
-      g.addColorStop(1, "rgba(76, 86, 106, 0)");
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.fill();
+  const arcs = [
+    [1, 0], [0, 3], [3, 4], [4, 7], [6, 2], [1, 6], [5, 4], [7, 9], [8, 5], [9, 1],
+  ].map(([a, b], i) => {
+    const A = nodes[a], B = nodes[b];
+    const omega = Math.acos(Math.max(-1, Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2])));
+    const so = Math.sin(omega);
+    const pts = [];
+    const N = 56;
+    for (let k = 0; k <= N; k++) {
+      const t = k / N;
+      const wa = Math.sin((1 - t) * omega) / so, wb = Math.sin(t * omega) / so;
+      // lifted off the surface in the middle, so it reads as an arc over the globe
+      const lift = 1 + 0.16 * Math.sin(Math.PI * t) * Math.min(1, omega / 1.2);
+      pts.push([A[0] * wa + B[0] * wb, A[1] * wa + B[1] * wb, A[2] * wa + B[2] * wb, lift]);
     }
+    return { pts, offset: i * 1.37 };
+  });
 
-    const clusters = 10;
-    for (let i = 0; i < clusters; i++) {
-      const cx = Math.random() * w;
-      const cy = h * 0.16 + Math.random() * h * 0.68; // avoid poles
-      const blobs = 4 + ((Math.random() * 4) | 0);
-      for (let j = 0; j < blobs; j++) {
-        blob(
-          cx + (Math.random() - 0.5) * 130,
-          cy + (Math.random() - 0.5) * 90,
-          28 + Math.random() * 58,
-          0.65 + Math.random() * 0.3
-        );
+  /* ---- projection ---- */
+  function project(v) {
+    const cr = Math.cos(rot), sr = Math.sin(rot);
+    const ct = Math.cos(tilt), st = Math.sin(tilt);
+    const x = v[0] * cr + v[2] * sr;
+    const z = -v[0] * sr + v[2] * cr;
+    const y2 = v[1] * ct - z * st;
+    const z2 = v[1] * st + z * ct;
+    const k = R * (v[3] || 1);
+    return [cx + x * k, cy - y2 * k, z2];
+  }
+
+  // Stroke the runs of a projected polyline that are on the requested side.
+  function strokeSide(points, front) {
+    ctx.beginPath();
+    let pen = false;
+    for (const p of points) {
+      if ((p[2] >= 0) === front) {
+        if (pen) ctx.lineTo(p[0], p[1]);
+        else { ctx.moveTo(p[0], p[1]); pen = true; }
+      } else {
+        pen = false;
+      }
+    }
+    ctx.stroke();
+  }
+
+  function hatch() {
+    // Shadow crescent, lower right: the disc minus a disc shifted up-left.
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, TAU);
+    ctx.clip();
+    ctx.beginPath();
+    ctx.rect(0, 0, W, W);
+    ctx.arc(cx - R * 0.2, cy - R * 0.2, R * 1.03, 0, TAU);
+    ctx.clip("evenodd");
+    ctx.globalAlpha = 0.3;
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    for (let d = 0; d < W * 2; d += 4.5) {
+      ctx.moveTo(d, 0);
+      ctx.lineTo(d - W, W);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // 0..1 drawn fraction and an opacity for an arc at time t (seconds).
+  function arcState(t, offset) {
+    if (reduceMotion) return [1, 1];
+    const c = (t + offset) % 11;
+    if (c < 2.4) return [c / 2.4, 1];
+    if (c < 6) return [1, 1];
+    if (c < 7.4) return [1, 1 - (c - 6) / 1.4];
+    return [0, 0];
+  }
+
+  function draw(t) {
+    if (!W) return;
+    ctx.clearRect(0, 0, W, W);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = INK;
+
+    const mer = meridians.map((l) => l.map(project));
+    const par = parallels.map((p) => ({ pts: p.line.map(project), equator: p.equator }));
+
+    // far side, seen through the globe
+    ctx.globalAlpha = 0.15;
+    ctx.lineWidth = 0.6;
+    mer.forEach((l) => strokeSide(l, false));
+    par.forEach((p) => strokeSide(p.pts, false));
+
+    hatch();
+
+    // near side
+    ctx.globalAlpha = 0.6;
+    ctx.lineWidth = 0.7;
+    mer.forEach((l) => strokeSide(l, true));
+    par.forEach((p) => { if (!p.equator) strokeSide(p.pts, true); });
+    ctx.globalAlpha = 0.95;
+    ctx.lineWidth = 1.1;
+    par.forEach((p) => { if (p.equator) strokeSide(p.pts, true); });
+
+    // limb
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, TAU);
+    ctx.stroke();
+
+    // arcs
+    ctx.strokeStyle = RUBRIC;
+    ctx.fillStyle = RUBRIC;
+    for (const arc of arcs) {
+      const [frac, alpha] = arcState(t, arc.offset);
+      if (alpha <= 0) continue;
+      const n = Math.max(1, Math.round(frac * (arc.pts.length - 1)));
+      const pts = arc.pts.slice(0, n + 1).map(project);
+      // a lifted point is still visible past the horizon if it clears the limb
+      const shown = (p) => p[2] >= 0 || Math.hypot(p[0] - cx, p[1] - cy) > R;
+      for (const pass of [false, true]) {
+        ctx.globalAlpha = alpha * (pass ? 0.95 : 0.16);
+        ctx.lineWidth = pass ? 1.25 : 0.8;
+        ctx.beginPath();
+        let pen = false;
+        for (const p of pts) {
+          if (shown(p) === pass) {
+            if (pen) ctx.lineTo(p[0], p[1]);
+            else { ctx.moveTo(p[0], p[1]); pen = true; }
+          } else {
+            pen = false;
+          }
+        }
+        ctx.stroke();
+      }
+      const head = pts[pts.length - 1];
+      if (shown(head)) {
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.arc(head[0], head[1], 2.1, 0, TAU);
+        ctx.fill();
       }
     }
 
-    ctx.strokeStyle = "rgba(136, 192, 208, 0.14)";
-    ctx.lineWidth = 1;
-    for (let lat = 0; lat <= h; lat += h / 8) {
-      ctx.beginPath(); ctx.moveTo(0, lat); ctx.lineTo(w, lat); ctx.stroke();
+    // nodes: small open circles, near side only
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = INK;
+    ctx.fillStyle = PAPER;
+    ctx.lineWidth = 0.9;
+    for (const v of nodes) {
+      const p = project(v);
+      if (p[2] < 0.05) continue;
+      ctx.beginPath();
+      ctx.arc(p[0], p[1], 2.6, 0, TAU);
+      ctx.fill();
+      ctx.stroke();
     }
-    for (let lon = 0; lon <= w; lon += w / 16) {
-      ctx.beginPath(); ctx.moveTo(lon, 0); ctx.lineTo(lon, h); ctx.stroke();
-    }
-
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
   }
 
-  const surface = new THREE.Mesh(
-    new THREE.SphereGeometry(R * 0.985, 64, 40),
-    new THREE.MeshStandardMaterial({ map: makeSurfaceTexture(), roughness: 0.9, metalness: 0.05 })
-  );
-  group.add(surface);
-
-  // ---------- schematic wireframe overlay ----------
-  const wire = new THREE.Mesh(
-    new THREE.SphereGeometry(R, 48, 32),
-    new THREE.MeshBasicMaterial({
-      color: ACCENT, wireframe: true, transparent: true,
-      opacity: 0.11, depthWrite: false,
-    })
-  );
-  group.add(wire);
-
-  // ---------- fresnel atmosphere rim glow ----------
-  const atmosphere = new THREE.Mesh(
-    new THREE.SphereGeometry(R * 1.07, 48, 32),
-    new THREE.ShaderMaterial({
-      vertexShader: `
-        varying vec3 vNormal;
-        void main() {
-          vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vNormal;
-        uniform vec3 glowColor;
-        void main() {
-          float intensity = pow(0.6 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 4.0) * 0.55;
-          gl_FragColor = vec4(glowColor, 1.0) * intensity;
-        }
-      `,
-      uniforms: { glowColor: { value: new THREE.Color(ACCENT) } },
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
-      transparent: true,
-      depthWrite: false,
-    })
-  );
-  scene.add(atmosphere);
-
-  // ---------- starfield ----------
-  function makeStarfield(count, radius) {
-    const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const u = Math.random(), v = Math.random();
-      const theta = 2 * Math.PI * u, phi = Math.acos(2 * v - 1);
-      const r = radius * (0.6 + Math.random() * 0.4);
-      positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = r * Math.cos(phi);
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    const mat = new THREE.PointsMaterial({
-      color: 0xffffff, size: 0.045, transparent: true, opacity: 0.55,
-      depthWrite: false, blending: THREE.AdditiveBlending,
-    });
-    return new THREE.Points(geo, mat);
-  }
-  scene.add(makeStarfield(800, 40));
-
-  // ---------- collection points (Fibonacci sphere distribution) ----------
-  function fibonacciSphere(n) {
-    const pts = [];
-    const phi = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < n; i++) {
-      const y = 1 - (i / (n - 1)) * 2;
-      const rad = Math.sqrt(Math.max(0, 1 - y * y));
-      const theta = phi * i;
-      pts.push(new THREE.Vector3(Math.cos(theta) * rad, y, Math.sin(theta) * rad).multiplyScalar(R));
-    }
-    return pts;
-  }
-  const nodePositions = fibonacciSphere(POINT_COUNT);
-
-  const pointMat = new THREE.SpriteMaterial({
-    map: pointGlowTex, color: 0xffffff, transparent: true,
-    depthWrite: false, blending: THREE.AdditiveBlending,
-  });
-  nodePositions.forEach((p) => {
-    const s = new THREE.Sprite(pointMat);
-    s.position.copy(p);
-    s.scale.set(0.16, 0.16, 0.16);
-    group.add(s);
-  });
-
-  // ---------- arcs between a handful of point pairs, each with a traveling pulse ----------
-  const pulseMat = new THREE.SpriteMaterial({
-    map: pulseGlowTex, color: 0xffffff, transparent: true,
-    depthWrite: false, blending: THREE.AdditiveBlending,
-  });
-
-  const pulses = [];
-  const usedPairs = new Set();
-  let attempts = 0;
-  while (pulses.length < ARC_COUNT && attempts < 300) {
-    attempts++;
-    const i = (Math.random() * POINT_COUNT) | 0;
-    const j = (Math.random() * POINT_COUNT) | 0;
-    if (i === j) continue;
-    const key = i < j ? `${i}-${j}` : `${j}-${i}`;
-    if (usedPairs.has(key)) continue;
-    usedPairs.add(key);
-
-    const p1 = nodePositions[i], p2 = nodePositions[j];
-    const mid = p1.clone().add(p2).multiplyScalar(0.5);
-    const height = R * (0.45 + Math.random() * 0.35);
-    mid.normalize().multiplyScalar(R + height);
-
-    const curve = new THREE.QuadraticBezierCurve3(p1, mid, p2);
-    const geom = new THREE.BufferGeometry().setFromPoints(curve.getPoints(40));
-    const line = new THREE.Line(
-      geom,
-      new THREE.LineBasicMaterial({
-        color: ACCENT2, transparent: true, opacity: 0.3,
-        depthWrite: false, blending: THREE.AdditiveBlending,
-      })
-    );
-    group.add(line);
-
-    const sprite = new THREE.Sprite(pulseMat);
-    sprite.scale.set(0.22, 0.22, 0.22);
-    group.add(sprite);
-
-    pulses.push({ curve, sprite, t: Math.random(), speed: 0.18 + Math.random() * 0.12 });
-  }
-
-  // ---------- post-processing: real bloom ----------
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.4, 0.35, 0.4);
-  composer.addPass(bloomPass);
-  composer.addPass(new OutputPass());
-
-  // ---------- resize ----------
+  /* ---- sizing ---- */
   function resize() {
-    const rect = container.getBoundingClientRect();
-    const w = Math.max(1, rect.width), h = Math.max(1, rect.height);
-    renderer.setSize(w, h, false);
-    composer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
+    const w = canvas.clientWidth;
+    if (!w) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = canvas.height = Math.round(w * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    W = w;
+    cx = cy = w / 2;
+    R = w * 0.42;
+    draw(performance.now() / 1000);
   }
-  resize();
-  window.addEventListener("resize", resize);
 
-  // ---------- mouse parallax ----------
-  const mouse = { x: 0, y: 0 };
-  const tilt  = { x: 0, y: 0 };
-  window.addEventListener("pointermove", (e) => {
-    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
-  }, { passive: true });
+  /* ---- animation: runs only while on screen and the tab is visible ---- */
+  let running = false, onScreen = true, dragging = false, last = 0;
 
-  // ---------- animate ----------
-  const clock = new THREE.Clock();
-  function animate() {
-    requestAnimationFrame(animate);
-    const dt = Math.min(clock.getDelta(), 0.05);
-
-    group.rotation.y += dt * 0.12;
-    tilt.x += (mouse.y * 0.18 - tilt.x) * 0.04;
-    tilt.y += (mouse.x * 0.18 - tilt.y) * 0.04;
-    group.rotation.x = tilt.x;
-    group.rotation.z = tilt.y * 0.3;
-
-    for (const p of pulses) {
-      p.t += dt * p.speed;
-      if (p.t > 1) p.t -= 1;
-      p.sprite.position.copy(p.curve.getPointAt(p.t));
+  function frame(now) {
+    if (!running) return;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    if (!dragging) rot += dt * 0.085;   // about one turn every 74 seconds
+    draw(now / 1000);
+    requestAnimationFrame(frame);
+  }
+  function sync() {
+    const should = !reduceMotion && onScreen && !document.hidden;
+    if (should && !running) {
+      running = true;
+      last = performance.now();
+      requestAnimationFrame(frame);
+    } else if (!should) {
+      running = false;
     }
-
-    composer.render();
   }
-  animate();
+
+  /* ---- drag to turn ---- */
+  let px = 0, py = 0;
+  canvas.addEventListener("pointerdown", (e) => {
+    dragging = true;
+    px = e.clientX;
+    py = e.clientY;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.style.cursor = "grabbing";
+  });
+  canvas.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    rot += (e.clientX - px) * 0.008;
+    tilt = Math.max(-1.2, Math.min(1.2, tilt + (e.clientY - py) * 0.006));
+    px = e.clientX;
+    py = e.clientY;
+    if (!running) draw(performance.now() / 1000);
+  });
+  function release() {
+    dragging = false;
+    canvas.style.cursor = "";
+  }
+  canvas.addEventListener("pointerup", release);
+  canvas.addEventListener("pointercancel", release);
+
+  if ("ResizeObserver" in window) new ResizeObserver(resize).observe(canvas);
+  else window.addEventListener("resize", resize);
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((entries) => {
+      onScreen = entries[0].isIntersecting;
+      sync();
+    }).observe(canvas);
+  }
+  document.addEventListener("visibilitychange", sync);
+
+  resize();
+  sync();
 })();

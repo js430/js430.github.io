@@ -19,6 +19,9 @@
     const final = el.textContent;
     const len = final.length;
     const total = len * MS_PER_CHAR + LOCK_WINDOW + 80;
+    // Hold the heading's height so a line that re-wraps mid-scramble
+    // can't push the text below it around.
+    el.style.minHeight = el.offsetHeight + "px";
     el.classList.add("scrambling");
     const start = performance.now();
 
@@ -37,6 +40,7 @@
         requestAnimationFrame(frame);
       } else {
         el.textContent = final;
+        el.style.minHeight = "";
         el.classList.remove("scrambling");
       }
     }
@@ -129,7 +133,6 @@
     projects: "projects.html",
     personal: "personal.html",
     resume: "resume.html",
-    dossier: "resume.html",
     contact: "index.html#contact",
     about: "index.html#about",
   };

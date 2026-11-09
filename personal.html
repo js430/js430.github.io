@@ -8,457 +8,433 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal, .hero-load { opacity: 1; transform: none; animation: none; }</style></noscript>
 </head>
 <body>
-  <nav class="nav">
-    <a class="nav-brand" href="index.html"><span class="brand-mark"></span>Jeffrey Shi</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="personal.html" class="active">Personal</a>
-      <a href="resume.html">Resume</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="mast-name" href="index.html">Jeffrey Shi</a>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="personal.html" class="active">Personal</a>
+        <a href="resume.html">Resume</a>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main class="container">
+  <main class="page">
+    <div class="col">
 
-    <section class="section" style="padding-bottom:0;">
-      <div class="section-header reveal">
-        <span class="tag">03</span>
-        <h2 data-scramble>Personal Projects</h2>
-        <div class="rule"></div>
-      </div>
-      <div class="grid-2 reveal" style="margin-bottom:40px;">
-        <div class="panel">
-          <p style="font-size:15px;">
-            Outside of work, I run <strong style="color:var(--accent); font-weight:600;">Ava</strong> —
-            a Discord bot I built and maintain for a Pokémon and collectibles
-            restock community that started in Virginia, Maryland, and DC and
-            now covers seven states plus DC.
-            It tracks confirmed restocks, unverified "hope" tips, and line
-            lengths in real time, then turns that history into statistical
-            forecasts members actually use to plan store runs.
-          </p>
-          <p style="font-size:15px; margin-top:14px;">
-            It's grown into two connected products. Ava handles the Discord
-            side — moderation, reputation, onboarding, photo privacy, and
-            an AI-assisted server-structure auditor. Its companion web app,
-            <strong style="color:var(--accent); font-weight:600;">Nexus Card Co</strong>,
-            is a role-gated dashboard with restock analytics, a searchable
-            card catalog, a portfolio tracker, and a grading ROI
-            calculator. Same Postgres database, two codebases, both on
-            Railway.
-          </p>
-          <div class="hero-actions" style="margin-top:24px;">
-            <a class="btn" href="https://discord.gg/FQAQ3DVdY7" target="_blank" rel="noopener">Join the server</a>
-            <a class="btn secondary" href="https://www.nexuscardco.com/" target="_blank" rel="noopener">Visit Nexus Card Co</a>
-          </div>
-        </div>
-        <div class="panel">
-          <div class="fact-row"><span class="fact-label">Stack</span><span class="val">Python · discord.py · FastAPI · PostgreSQL</span></div>
-          <div class="fact-row"><span class="fact-label">Hosting</span><span class="val">Railway · CI/CD auto-deploy on push</span></div>
-          <div class="fact-row"><span class="fact-label">Bot</span><span class="val">55 cogs · 32 interactive views</span></div>
-          <div class="fact-row"><span class="fact-label">Web</span><span class="val">146 routes · 22 modules</span></div>
-          <div class="fact-row"><span class="fact-label">Coverage</span><span class="val">16 areas across 7 states + DC</span></div>
-          <div class="fact-row"><span class="fact-label">Source</span><span class="val">Closed — proprietary logic</span></div>
+      <header class="page-title">
+        <h1 class="hero-load" style="animation-delay:0.05s">Personal projects</h1>
+        <p class="standfirst hero-load" style="animation-delay:0.18s">
+          Outside of work, I run <strong>Ava</strong> — a Discord bot I
+          built and maintain for a Pokémon and collectibles restock
+          community that started in Virginia, Maryland, and DC and now
+          covers seven states plus DC.
+        </p>
+      </header>
+
+      <div class="hero-load" style="animation-delay:0.3s">
+        <p>
+          It tracks confirmed restocks, unverified "hope" tips, and line
+          lengths in real time, then turns that history into statistical
+          forecasts members actually use to plan store runs.
+        </p>
+        <p>
+          It's grown into two connected products. Ava handles the Discord
+          side — moderation, reputation, onboarding, photo privacy, and an
+          AI-assisted server-structure auditor. Its companion web app,
+          <strong>Nexus Card Co</strong>, is a role-gated dashboard with
+          restock analytics, a searchable card catalog, a portfolio tracker,
+          and a grading ROI calculator. Same Postgres database, two
+          codebases, both on Railway.
+        </p>
+        <div class="actions">
+          <a class="btn" href="https://discord.gg/FQAQ3DVdY7" target="_blank" rel="noopener">Join the server</a>
+          <a href="https://www.nexuscardco.com/" target="_blank" rel="noopener">Visit Nexus Card Co</a>
         </div>
       </div>
-    </section>
 
-    <section class="section" style="padding-top:0;">
-      <p class="reveal" style="font-size:15px; color:var(--text-2); margin-bottom:32px; max-width:640px;">
-        A selection of what's shipped across both codebases — the rest is
-        community infrastructure (reputation, onboarding, calendars,
-        activity tracking) and product plumbing (auth, admin tooling)
-        that keeps things running.
+      <table class="bt reveal" style="margin-top:2.6em;">
+        <caption><b>Table 1.</b> The two codebases.</caption>
+        <tbody>
+          <tr><th scope="row">Stack</th><td>Python, discord.py, FastAPI, PostgreSQL</td></tr>
+          <tr><th scope="row">Hosting</th><td>Railway, auto-deployed on push</td></tr>
+          <tr><th scope="row">Bot</th><td>55 cogs, 32 interactive views</td></tr>
+          <tr><th scope="row">Web</th><td>146 routes, 22 modules</td></tr>
+          <tr><th scope="row">Coverage</th><td>16 areas across 7 states and DC</td></tr>
+          <tr><th scope="row">Source</th><td>Closed — proprietary logic</td></tr>
+        </tbody>
+      </table>
+
+      <p class="reveal">
+        What follows is a selection of what's shipped across both
+        codebases. The rest is community infrastructure (reputation,
+        onboarding, calendars, activity tracking) and product plumbing
+        (auth, admin tooling) that keeps things running.
       </p>
 
-      <div class="grid-2">
+      <nav class="contents reveal" aria-label="Contents">
+        <p class="contents-head">Contents</p>
+        <ol class="toc">
+          <li><a href="#callouts"><span class="t">Real-time callout and tracking system</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#forecasting"><span class="t">Restock forecasting engine</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#vision"><span class="t">AI trading card identifier</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#alerts"><span class="t">Deal and restock alert pipeline</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#graph"><span class="t">Invite network visualizer</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#audit"><span class="t">AI-assisted server structure audit</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#privacy"><span class="t">Fail-closed face blurring</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#marketplace"><span class="t">Marketplace rules and enforcement</span><span class="lead"></span><span class="who">Ava and Nexus</span></a></li>
+          <li><a href="#expansion"><span class="t">Multi-state expansion</span><span class="lead"></span><span class="who">Ava</span></a></li>
+          <li><a href="#catalog"><span class="t">Card catalog, tally and trade calculator</span><span class="lead"></span><span class="who">Nexus</span></a></li>
+          <li><a href="#grading"><span class="t">Grading ROI calculator</span><span class="lead"></span><span class="who">Nexus</span></a></li>
+          <li><a href="#portfolio"><span class="t">Card portfolio and price tracker</span><span class="lead"></span><span class="who">Nexus</span></a></li>
+          <li><a href="#inventory"><span class="t">Physical inventory pick system</span><span class="lead"></span><span class="who">Nexus</span></a></li>
+        </ol>
+      </nav>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · CALLOUTS</span>
-            <span class="case-status active">CORE FEATURE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Real-Time Callout &amp; Tracking System</h3>
-            <p>
-              The heart of the server: four callout types — <code>/restock</code>
-              (confirmed), <code>/hope</code> (unconfirmed tip), <code>/remain</code>
-              (remaining stock check), and <code>/empty</code> — each one pings the
-              right regional role and spins up a dedicated thread with a live,
-              interactive status panel.
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">Crowd-sourced line tracking</strong> — members tap a line-length button (0/10/20/30/40/50+) in the thread; a rolling average of the last 10 reports drives a color-coded indicator (🟢/🟡/🔴) that updates live on both the thread panel and the original channel alert at once, with a 5-minute per-user cooldown against spam.</li>
-              <li><strong style="color:var(--text);">One-tap stock status</strong> — "Still in Stock" / "Cooked" buttons (with an optional note like "No Pokémon" or "Perfect Order only") rename the thread and update both embeds instantly, so status is visible without opening the thread.</li>
-              <li><strong style="color:var(--text);">Direct Google Maps links</strong> — every stored location carries its maps link, so every callout title is clickable straight to directions.</li>
-              <li><strong style="color:var(--text);">Guided location discovery</strong> — filing a callout walks region → store type → specific location, populated live from the database for that exact combination; a separate filterable browser lets mods search every stored location by store type and by region/state.</li>
-              <li><strong style="color:var(--text);">Duplicate &amp; conflict protection</strong> — a 2-hour cooldown blocks re-reporting the same store/location, and an active unconfirmed hope alert blocks a duplicate restock report until it's confirmed instead.</li>
-            </ul>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">PostgreSQL</span>
-              <span class="chip green">Real-Time</span>
-              <span class="chip green">Live Embeds</span>
-            </div>
-          </div>
+      <div class="entries">
+
+        <article class="entry has-mn reveal" id="callouts">
+          <h2 class="entry-title" data-scramble>Real-Time Callout &amp; Tracking System</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Core feature</dd>
+              <dt>Built with</dt><dd>Python, PostgreSQL</dd>
+              <dt>Keywords</dt><dd>Real-time, live embeds</dd>
+            </dl>
+          </aside>
+          <p>
+            The heart of the server: four callout types —
+            <code>/restock</code> (confirmed), <code>/hope</code>
+            (unconfirmed tip), <code>/remain</code> (remaining stock check),
+            and <code>/empty</code>. Each one pings the right regional role
+            and spins up a dedicated thread with a live, interactive status
+            panel.
+          </p>
+          <ul>
+            <li><strong>Crowd-sourced line tracking.</strong> Members tap a line-length button (0, 10, 20, 30, 40, 50+) in the thread. A rolling average of the last 10 reports drives a green, yellow or red indicator that updates on both the thread panel and the original channel alert at once, with a 5-minute per-user cooldown against spam.</li>
+            <li><strong>One-tap stock status.</strong> "Still in Stock" and "Cooked" buttons (with an optional note like "No Pokémon" or "Perfect Order only") rename the thread and update both embeds instantly, so status is visible without opening the thread.</li>
+            <li><strong>Direct Google Maps links.</strong> Every stored location carries its maps link, so every callout title is clickable straight to directions.</li>
+            <li><strong>Guided location discovery.</strong> Filing a callout walks region, then store type, then specific location, populated live from the database for that exact combination. A separate filterable browser lets mods search every stored location by store type and by region or state.</li>
+            <li><strong>Duplicate and conflict protection.</strong> A 2-hour cooldown blocks re-reporting the same store, and an active unconfirmed hope alert blocks a duplicate restock report until it's confirmed instead.</li>
+          </ul>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · FORECASTING</span>
-            <span class="case-status active">CORE FEATURE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Restock Forecasting Engine</h3>
-            <p>
-              Predicts which day of the week a store is most likely to restock,
-              using up to 6 months of community-verified restock history. Four
-              models run side by side:
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">Recency-weighted frequency</strong> — a 3-tier decay model (30/90/180-day windows) scores each day of the week independently, so a store restocking every Tuesday <em>and</em> every Sunday can show both near 100%.</li>
-              <li><strong style="color:var(--text);">Bayesian Beta-Binomial</strong> — wraps each day's estimate in a Beta posterior with a weak prior, pulling sparse data toward a sane baseline and reporting a 95% credible interval instead of a bare percentage.</li>
-              <li><strong style="color:var(--text);">Empirical Bayes regional pooling</strong> — estimates a region-wide base rate for a given day, then uses it as an informed prior so data-poor locations borrow strength from data-rich ones.</li>
-              <li><strong style="color:var(--text);">James–Stein shrinkage</strong> — blends each location's own rate with the regional average, weighted by how much history that location actually has.</li>
-            </ul>
-            <p style="margin-top:14px;">
-              Those credible intervals used to be the only reason scipy was
-              installed — roughly 70 MB of startup memory on a 512 MB host,
-              for two function calls. The Beta quantile is now about 80
-              lines of plain Python: a continued-fraction incomplete beta,
-              then Newton steps inside a bracket that falls back to
-              bisection. It was checked against scipy before the dependency
-              came out.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">Numerical Methods</span>
-              <span class="chip green">Bayesian Inference</span>
-              <span class="chip green">Empirical Bayes</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="forecasting">
+          <h2 class="entry-title" data-scramble>Restock Forecasting Engine</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Core feature</dd>
+              <dt>Built with</dt><dd>Python</dd>
+              <dt>Keywords</dt><dd>Bayesian inference, empirical Bayes, numerical methods</dd>
+            </dl>
+          </aside>
+          <p>
+            Predicts which day of the week a store is most likely to
+            restock, using up to 6 months of community-verified restock
+            history. Four models run side by side:
+          </p>
+          <ul>
+            <li><strong>Recency-weighted frequency.</strong> A 3-tier decay model (30-, 90- and 180-day windows) scores each day of the week independently, so a store restocking every Tuesday <em>and</em> every Sunday can show both near 100%.</li>
+            <li><strong>Bayesian Beta-Binomial.</strong> Wraps each day's estimate in a Beta posterior with a weak prior, pulling sparse data toward a sane baseline and reporting a 95% credible interval instead of a bare percentage.</li>
+            <li><strong>Empirical Bayes regional pooling.</strong> Estimates a region-wide base rate for a given day, then uses it as an informed prior so data-poor locations borrow strength from data-rich ones.</li>
+            <li><strong>James–Stein shrinkage.</strong> Blends each location's own rate with the regional average, weighted by how much history that location actually has.</li>
+          </ul>
+          <p>
+            Those credible intervals used to be the only reason scipy was
+            installed — roughly 70 MB of startup memory on a 512 MB host,
+            for two function calls. The Beta quantile is now about 80 lines
+            of plain Python: a continued-fraction incomplete beta, then
+            Newton steps inside a bracket that falls back to bisection. It
+            was checked against scipy before the dependency came out.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · VISION</span>
-            <span class="case-status active">CORE FEATURE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>AI Trading Card Identifier</h3>
-            <p>
-              Members drop a photo of a card into a channel; Claude Vision reads
-              the game, name, number, set, language, and parallel/variant
-              markings (holo patterns, serial numbers, SP/alt-art/treasure-rare
-              stamps for TCGs; rookie/autograph/relic flags for sports cards)
-              from a single structured-extraction prompt.
-            </p>
-            <p style="margin-top:10px;">
-              The result is cross-referenced against five different sources —
-              pokemontcg.io, Scryfall, YGOProDeck, a One Piece card API, and
-              eBay — to return live pricing, and a follow-up view lets the
-              member log the card straight into their collection by condition.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Claude Vision</span>
-              <span class="chip">Python</span>
-              <span class="chip green">Prompt Engineering</span>
-              <span class="chip green">Multi-API Fusion</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="vision">
+          <h2 class="entry-title" data-scramble>AI Trading Card Identifier</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Core feature</dd>
+              <dt>Built with</dt><dd>Claude Vision, Python</dd>
+              <dt>Keywords</dt><dd>Prompt engineering, multi-API fusion</dd>
+            </dl>
+          </aside>
+          <p>
+            Members drop a photo of a card into a channel; Claude Vision
+            reads the game, name, number, set, language, and parallel or
+            variant markings (holo patterns, serial numbers, SP, alt-art and
+            treasure-rare stamps for TCGs; rookie, autograph and relic flags
+            for sports cards) from a single structured-extraction prompt.
+          </p>
+          <p>
+            The result is cross-referenced against five different sources —
+            pokemontcg.io, Scryfall, YGOProDeck, a One Piece card API, and
+            eBay — to return live pricing, and a follow-up view lets the
+            member log the card straight into their collection by condition.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · ALERTS</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Deal &amp; Restock Alert Pipeline</h3>
-            <p>
-              Listens to a channel fed by a third-party price-diff bot, parses
-              product name and price straight out of its embeds (handling
-              plain dollar amounts, USD-in-parens conversions, and bare "USD"
-              suffixes), and matches against mod-configured watch rules —
-              keyword, price ceiling, and optional location filter.
-            </p>
-            <p style="margin-top:10px;">
-              A match pings the right role in the right channel, with
-              per-rule cooldown deduplication so a flaky source feed can't
-              spam the same deal twice.
-            </p>
-            <p style="margin-top:10px;">
-              Members can also set their own. Keyword alerts saved on the
-              Nexus dashboard — with exclusion words, a store list, and a
-              price ceiling — are matched in a single Postgres query each
-              time a third-party restock monitor posts. Everyone who matched
-              gets one combined ping, by DM if they asked for it, falling
-              back to a channel mention when their DMs are closed.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">PostgreSQL</span>
-              <span class="chip">Regex Parsing</span>
-              <span class="chip green">Event-Driven</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="alerts">
+          <h2 class="entry-title" data-scramble>Deal &amp; Restock Alert Pipeline</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>Python, PostgreSQL</dd>
+              <dt>Keywords</dt><dd>Regex parsing, event-driven</dd>
+            </dl>
+          </aside>
+          <p>
+            Listens to a channel fed by a third-party price-diff bot, parses
+            product name and price straight out of its embeds (handling
+            plain dollar amounts, USD-in-parens conversions, and bare "USD"
+            suffixes), and matches against mod-configured watch rules:
+            keyword, price ceiling, and optional location filter.
+          </p>
+          <p>
+            A match pings the right role in the right channel, with per-rule
+            cooldown deduplication so a flaky source feed can't spam the
+            same deal twice.
+          </p>
+          <p>
+            Members can also set their own. Keyword alerts saved on the
+            Nexus dashboard — with exclusion words, a store list, and a
+            price ceiling — are matched in a single Postgres query each time
+            a third-party restock monitor posts. Everyone who matched gets
+            one combined ping, by DM if they asked for it, falling back to a
+            channel mention when their DMs are closed.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · GRAPH</span>
-            <span class="case-status archived">MOD TOOL</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Invite Network Visualizer</h3>
-            <p>
-              Generates a self-contained, interactive HTML graph of who invited
-              whom across the server's history — node color and size scale
-              with invite count, positions are pre-computed with a golden-angle
-              phyllotaxis spiral so the graph renders instantly with physics
-              off, and hover tooltips show join dates and invite counts.
-            </p>
-            <p style="margin-top:10px;">
-              Ships as a single downloadable file — no server, no dependencies,
-              just open it in a browser.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Vis.js</span>
-              <span class="chip">Python</span>
-              <span class="chip green">Graph Visualization</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="graph">
+          <h2 class="entry-title" data-scramble>Invite Network Visualizer</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Mod tool</dd>
+              <dt>Built with</dt><dd>Vis.js, Python</dd>
+              <dt>Keywords</dt><dd>Graph visualization</dd>
+            </dl>
+          </aside>
+          <p>
+            Generates a self-contained, interactive HTML graph of who
+            invited whom across the server's history. Node color and size
+            scale with invite count, positions are pre-computed with a
+            golden-angle phyllotaxis spiral so the graph renders instantly
+            with physics off, and hover tooltips show join dates and invite
+            counts.
+          </p>
+          <p>
+            Ships as a single downloadable file — no server, no
+            dependencies, just open it in a browser.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · AUDIT</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>AI-Assisted Server Structure Audit</h3>
-            <p>
-              A Claude-backed way to answer "is this server actually
-              consistent?" One-shot mode builds a digest of channel/role
-              structure and activity counts, sends it in a single request,
-              and posts back what's actually wrong — prioritized, regional
-              asymmetry first. A conversational mode lets a mod @mention the
-              bot and ask questions; Claude picks its own tools to go look
-              things up, read-only, no changes made.
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">Privacy by construction</strong> — never reads message content, only channel/role metadata and the bot's own tables; the one tool that touches history reads timestamps only.</li>
-              <li><strong style="color:var(--text);">Regional parity is the reason it exists</strong> — every region is supposed to be structurally identical, and drift there breaks features silently rather than loudly.</li>
-              <li><strong style="color:var(--text);">Degrades gracefully</strong> — the conversational agent uses a beta SDK surface, so it's wrapped in an import guard; the one-shot audit keeps working even if that path doesn't.</li>
-            </ul>
-            <div class="case-meta">
-              <span class="chip">Claude Opus 5</span>
-              <span class="chip">Agentic Tool Use</span>
-              <span class="chip green">Privacy-First</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="audit">
+          <h2 class="entry-title" data-scramble>AI-Assisted Server Structure Audit</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>Claude Opus 5</dd>
+              <dt>Keywords</dt><dd>Agentic tool use, privacy-first</dd>
+            </dl>
+          </aside>
+          <p>
+            A Claude-backed way to answer "is this server actually
+            consistent?" One-shot mode builds a digest of channel and role
+            structure and activity counts, sends it in a single request, and
+            posts back what's actually wrong — prioritized, regional
+            asymmetry first. A conversational mode lets a mod @mention the
+            bot and ask questions; Claude picks its own tools to go look
+            things up, read-only, no changes made.
+          </p>
+          <ul>
+            <li><strong>Privacy by construction.</strong> It never reads message content, only channel and role metadata and the bot's own tables. The one tool that touches history reads timestamps only.</li>
+            <li><strong>Regional parity is the reason it exists.</strong> Every region is supposed to be structurally identical, and drift there breaks features silently rather than loudly.</li>
+            <li><strong>Degrades gracefully.</strong> The conversational agent uses a beta SDK surface, so it's wrapped in an import guard; the one-shot audit keeps working even if that path doesn't.</li>
+          </ul>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · PRIVACY</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Fail-Closed Face Blurring</h3>
-            <p>
-              Discord can't edit an attachment in place, so watermarking a
-              restock photo means deleting the member's post and reposting
-              it as the bot — which makes the bot the publisher. Before
-              anything goes back up, each photo runs through a face
-              detector (YuNet, via OpenCV's DNN module) and any face it
-              finds is blurred.
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">Fails closed</strong> — a missing model, an unreadable image, an inference error, or a detection that wants to blur more than half the frame all mean "couldn't guarantee it," and the member's original post is left alone. The whole check runs before anything is deleted.</li>
-              <li><strong style="color:var(--text);">Tuned on a real failure</strong> — loosening the detection threshold to catch more faces turned a photo of a cat into a smear across 62% of the frame, so it went back to the default and the coverage guard went in.</li>
-              <li><strong style="color:var(--text);">Memory-aware</strong> — a detector is built per photo (about 3 ms) instead of shared, because a shared one was measured holding around 170 MB for the life of the process. Inference runs on a worker thread, off the event loop.</li>
-              <li><strong style="color:var(--text);">Hard to crop out</strong> — the watermark is a tiled diagonal text mark rather than a corner logo, and re-encoding drops EXIF and GPS data from what gets reposted.</li>
-              <li><strong style="color:var(--text);">Known limit</strong> — it catches clear, front-facing faces and misses people who are far away or turned to the side. It's a safety net, and members are told so.</li>
-            </ul>
-            <div class="case-meta">
-              <span class="chip">OpenCV</span>
-              <span class="chip">YuNet ONNX</span>
-              <span class="chip">Pillow</span>
-              <span class="chip green">Privacy</span>
-              <span class="chip green">Fail-Closed Design</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="privacy">
+          <h2 class="entry-title" data-scramble>Fail-Closed Face Blurring</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>OpenCV, YuNet (ONNX), Pillow</dd>
+              <dt>Keywords</dt><dd>Privacy, fail-closed design</dd>
+            </dl>
+          </aside>
+          <p>
+            Discord can't edit an attachment in place, so watermarking a
+            restock photo means deleting the member's post and reposting it
+            as the bot — which makes the bot the publisher. Before anything
+            goes back up, each photo runs through a face detector (YuNet,
+            via OpenCV's DNN module) and any face it finds is blurred.
+          </p>
+          <ul>
+            <li><strong>Fails closed.</strong> A missing model, an unreadable image, an inference error, or a detection that wants to blur more than half the frame all mean "couldn't guarantee it," and the member's original post is left alone. The whole check runs before anything is deleted.</li>
+            <li><strong>Tuned on a real failure.</strong> Loosening the detection threshold to catch more faces turned a photo of a cat into a smear across 62% of the frame, so it went back to the default and the coverage guard went in.</li>
+            <li><strong>Memory-aware.</strong> A detector is built per photo (about 3 ms) instead of shared, because a shared one was measured holding around 170 MB for the life of the process. Inference runs on a worker thread, off the event loop.</li>
+            <li><strong>Hard to crop out.</strong> The watermark is a tiled diagonal text mark rather than a corner logo, and re-encoding drops EXIF and GPS data from what gets reposted.</li>
+            <li><strong>Known limit.</strong> It catches clear, front-facing faces and misses people who are far away or turned to the side. It's a safety net, and members are told so.</li>
+          </ul>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · MARKETPLACE</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Marketplace Rules &amp; Enforcement</h3>
-            <p>
-              The buy/sell forums have their own moderation layer, split
-              across both codebases: mods write removal rules in a web
-              editor on Nexus, and the bot checks every new For Sale post
-              against them.
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">A small rule grammar</strong> — a rule is a list of groups, and a post matches if any group has all of its required terms and none of its excluded ones. Dashes count as spaces, <code>*</code> allows up to three words between two terms, and title and body are joined with a separator so a phrase can't straddle the two.</li>
-              <li><strong style="color:var(--text);">Broken rules can't widen</strong> — a rule the bot can't parse is skipped and logged, never read as "match everything." The editor rejects exactly the cases the bot would skip, so the mod finds out on save instead of never.</li>
-              <li><strong style="color:var(--text);">One table, one owner</strong> — the bot owns the schema and the dashboard only writes rows, so two apps never migrate the same table in different directions.</li>
-              <li><strong style="color:var(--text);">Strikes</strong> — one is a warning, two is seven days read-only, three removes marketplace access. The block is a per-member permission overwrite, because Discord ranks a member's own overwrite above any role's; it's reapplied if they leave and rejoin.</li>
-              <li><strong style="color:var(--text);">Listing flags</strong> — anonymous to the seller but visible to mods, on purpose: the realistic abuse is sellers flagging competitors, and mods can only spot that if they can see who's flagging.</li>
-            </ul>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">PostgreSQL JSONB</span>
-              <span class="chip">FastAPI</span>
-              <span class="chip green">Rule Engine</span>
-              <span class="chip green">Trust &amp; Safety</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="marketplace">
+          <h2 class="entry-title" data-scramble>Marketplace Rules &amp; Enforcement</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava and Nexus</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>Python, PostgreSQL JSONB, FastAPI</dd>
+              <dt>Keywords</dt><dd>Rule engine, trust and safety</dd>
+            </dl>
+          </aside>
+          <p>
+            The buy/sell forums have their own moderation layer, split
+            across both codebases: mods write removal rules in a web editor
+            on Nexus, and the bot checks every new For Sale post against
+            them.
+          </p>
+          <ul>
+            <li><strong>A small rule grammar.</strong> A rule is a list of groups, and a post matches if any group has all of its required terms and none of its excluded ones. Dashes count as spaces, <code>*</code> allows up to three words between two terms, and title and body are joined with a separator so a phrase can't straddle the two.</li>
+            <li><strong>Broken rules can't widen.</strong> A rule the bot can't parse is skipped and logged, never read as "match everything." The editor rejects exactly the cases the bot would skip, so the mod finds out on save instead of never.</li>
+            <li><strong>One table, one owner.</strong> The bot owns the schema and the dashboard only writes rows, so two apps never migrate the same table in different directions.</li>
+            <li><strong>Strikes.</strong> One is a warning, two is seven days read-only, three removes marketplace access. The block is a per-member permission overwrite, because Discord ranks a member's own overwrite above any role's; it's reapplied if they leave and rejoin.</li>
+            <li><strong>Listing flags.</strong> Anonymous to the seller but visible to mods, on purpose: the realistic abuse is sellers flagging competitors, and mods can only spot that if they can see who's flagging.</li>
+          </ul>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">AVA · EXPANSION</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Multi-State Expansion</h3>
-            <p>
-              The server began as three neighbors — Virginia, Maryland, and
-              DC — with region names written directly into the code. In
-              October it added Pennsylvania, Texas, Florida, Illinois, and
-              Colorado, which meant turning "region" into data first.
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">One-command provisioning</strong> — an admin command previews, then clones a template state's roles, channel permissions, and onboarding option. Anything that already exists is reused, so a run that stopped halfway can simply be run again.</li>
-              <li><strong style="color:var(--text);">Validated at startup</strong> — the region tables are checked on boot for missing IDs, duplicate labels, a state in no zone, or a bad time zone, so a typo shows up in the deploy log instead of on the first callout.</li>
-              <li><strong style="color:var(--text);">Stores keyed by ID, not name</strong> — there's an Arlington Target in Virginia and another in Texas. Joins moved to a location ID so their histories can't merge, and on the dashboard a member with a Texas role sees Texas data only, filtered in SQL.</li>
-              <li><strong style="color:var(--text);">Per-area time zones</strong> — Texas runs on Central. Reporting cutoffs, store hours, and the forecast math use the area's own clock, not the server's.</li>
-            </ul>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">PostgreSQL</span>
-              <span class="chip green">Data Modeling</span>
-              <span class="chip green">Idempotent Ops</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="expansion">
+          <h2 class="entry-title" data-scramble>Multi-State Expansion</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Ava</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>Python, PostgreSQL</dd>
+              <dt>Keywords</dt><dd>Data modeling, idempotent operations</dd>
+            </dl>
+          </aside>
+          <p>
+            The server began as three neighbors — Virginia, Maryland, and DC
+            — with region names written directly into the code. In October
+            it added Pennsylvania, Texas, Florida, Illinois, and Colorado,
+            which meant turning "region" into data first.
+          </p>
+          <ul>
+            <li><strong>One-command provisioning.</strong> An admin command previews, then clones a template state's roles, channel permissions, and onboarding option. Anything that already exists is reused, so a run that stopped halfway can simply be run again.</li>
+            <li><strong>Validated at startup.</strong> The region tables are checked on boot for missing IDs, duplicate labels, a state in no zone, or a bad time zone, so a typo shows up in the deploy log instead of on the first callout.</li>
+            <li><strong>Stores keyed by ID, not name.</strong> There's an Arlington Target in Virginia and another in Texas. Joins moved to a location ID so their histories can't merge, and on the dashboard a member with a Texas role sees Texas data only, filtered in SQL.</li>
+            <li><strong>Per-area time zones.</strong> Texas runs on Central. Reporting cutoffs, store hours, and the forecast math use the area's own clock, not the server's.</li>
+          </ul>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">NEXUS · CATALOG</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Card Catalog, Tally &amp; Trade Calculator</h3>
-            <p>
-              A searchable price catalog for Pokémon and Riftbound singles
-              and sealed product. Guests can use it without logging in,
-              limited to the newest sets.
-            </p>
-            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
-              <li><strong style="color:var(--text);">Live search</strong> — trigram (<code>pg_trgm</code>) GIN indexes are built at startup, in-flight requests are aborted so a slow response can't overwrite a newer one, and rows and filter facets come back together.</li>
-              <li><strong style="color:var(--text);">Quick Tally</strong> — a running list of cards with CSV export. Cells are escaped against spreadsheet formula injection, since card names come from third-party price APIs and aren't mine to trust.</li>
-              <li><strong style="color:var(--text);">Trade calculator</strong> — two sides valued at market, with editable prices. It lives entirely in the browser's local storage; nothing about a trade is sent to the server.</li>
-              <li><strong style="color:var(--text);">A second game without a rewrite</strong> — adding Riftbound replaced a hard-coded game list on every page with one registry of games and feature flags that each picker and endpoint reads.</li>
-            </ul>
-            <div class="case-meta">
-              <span class="chip">FastAPI</span>
-              <span class="chip">PostgreSQL · pg_trgm</span>
-              <span class="chip green">Search</span>
-              <span class="chip green">Multi-Game</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="catalog">
+          <h2 class="entry-title" data-scramble>Card Catalog, Tally &amp; Trade Calculator</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Nexus Card Co</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>FastAPI, PostgreSQL (pg_trgm)</dd>
+              <dt>Keywords</dt><dd>Search, multi-game</dd>
+            </dl>
+          </aside>
+          <p>
+            A searchable price catalog for Pokémon and Riftbound singles and
+            sealed product. Guests can use it without logging in, limited to
+            the newest sets.
+          </p>
+          <ul>
+            <li><strong>Live search.</strong> Trigram (<code>pg_trgm</code>) GIN indexes are built at startup, in-flight requests are aborted so a slow response can't overwrite a newer one, and rows and filter facets come back together.</li>
+            <li><strong>Quick Tally.</strong> A running list of cards with CSV export. Cells are escaped against spreadsheet formula injection, since card names come from third-party price APIs and aren't mine to trust.</li>
+            <li><strong>Trade calculator.</strong> Two sides valued at market, with editable prices. It lives entirely in the browser's local storage; nothing about a trade is sent to the server.</li>
+            <li><strong>A second game without a rewrite.</strong> Adding Riftbound replaced a hard-coded game list on every page with one registry of games and feature flags that each picker and endpoint reads.</li>
+          </ul>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">NEXUS · GRADING</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Grading ROI Calculator</h3>
-            <p>
-              Answers one honest question per grade: if this card sells at
-              the going rate for that grade, what do you actually keep after
-              grading fees, shipping both ways, insurance, and marketplace
-              cuts — compared with just selling it raw today. Deliberately
-              skips the tempting-but-fake math: no probability of pulling a
-              10, no expected-value blending. A confident number built on a
-              guessed input is worse than no number.
-            </p>
-            <div class="case-meta">
-              <span class="chip">Python</span>
-              <span class="chip">Decimal Math</span>
-              <span class="chip green">Product Design</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="grading">
+          <h2 class="entry-title" data-scramble>Grading ROI Calculator</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Nexus Card Co</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>Python</dd>
+              <dt>Keywords</dt><dd>Decimal math, product design</dd>
+            </dl>
+          </aside>
+          <p>
+            Answers one honest question per grade: if this card sells at the
+            going rate for that grade, what do you actually keep after
+            grading fees, shipping both ways, insurance, and marketplace
+            cuts, compared with just selling it raw today. Deliberately
+            skips the tempting-but-fake math: no probability of pulling a
+            10, no expected-value blending. A confident number built on a
+            guessed input is worse than no number.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">NEXUS · PORTFOLIO</span>
-            <span class="case-status active">ACTIVE</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Card Portfolio &amp; Price Tracker</h3>
-            <p>
-              Lets members track what they actually own — lot by lot, not
-              averaged, since buying the same card twice at different prices
-              needs two rows to compute a real return. Every lot points at
-              one shared, deduplicated price catalog, so a card tracked by
-              three different members' portfolios still costs one price-API
-              credit a day, not three. All money is stored and computed as
-              Decimal, never float.
-            </p>
-            <div class="case-meta">
-              <span class="chip">FastAPI</span>
-              <span class="chip">PostgreSQL</span>
-              <span class="chip green">Cost-Basis Accounting</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="portfolio">
+          <h2 class="entry-title" data-scramble>Card Portfolio &amp; Price Tracker</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Nexus Card Co</dd>
+              <dt>Status</dt><dd>Active</dd>
+              <dt>Built with</dt><dd>FastAPI, PostgreSQL</dd>
+              <dt>Keywords</dt><dd>Cost-basis accounting</dd>
+            </dl>
+          </aside>
+          <p>
+            Lets members track what they actually own — lot by lot, not
+            averaged, since buying the same card twice at different prices
+            needs two rows to compute a real return. Every lot points at one
+            shared, deduplicated price catalog, so a card tracked by three
+            different members' portfolios still costs one price-API credit a
+            day, not three. All money is stored and computed as Decimal,
+            never float.
+          </p>
         </article>
 
-        <article class="case-file reveal">
-          <div class="case-header">
-            <span class="case-id">NEXUS · INVENTORY</span>
-            <span class="case-status dev">IN DEV</span>
-          </div>
-          <div class="case-body">
-            <h3 data-scramble>Physical Inventory Pick System</h3>
-            <p>
-              A SKU-as-address system for a real seller's physical card
-              inventory: eBay's Custom Label field doubles as the storage
-              bin code, so the pick location arrives with every sale
-              automatically. A bin's fill level is computed from the cards
-              actually in it rather than a stored counter, so occupancy can
-              never silently drift out of sync with reality.
-            </p>
-            <div class="case-meta">
-              <span class="chip">PostgreSQL</span>
-              <span class="chip green">Systems Design</span>
-            </div>
-          </div>
+        <article class="entry has-mn reveal" id="inventory">
+          <h2 class="entry-title" data-scramble>Physical Inventory Pick System</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Part of</dt><dd>Nexus Card Co</dd>
+              <dt>Status</dt><dd>In development</dd>
+              <dt>Built with</dt><dd>PostgreSQL</dd>
+              <dt>Keywords</dt><dd>Systems design</dd>
+            </dl>
+          </aside>
+          <p>
+            A SKU-as-address system for a real seller's physical card
+            inventory: eBay's Custom Label field doubles as the storage bin
+            code, so the pick location arrives with every sale
+            automatically. A bin's fill level is computed from the cards
+            actually in it rather than a stored counter, so occupancy can
+            never silently drift out of sync with reality.
+          </p>
         </article>
 
       </div>
-    </section>
 
+    </div>
   </main>
 
-  <footer class="status-bar">
-    <span>&copy; 2026 Jeffrey Shi</span>
-    <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
-    <span id="utc-clock"></span>
+  <footer class="colophon">
+    <div class="colophon-inner">
+      <p>&copy; 2026 Jeffrey Shi. Set in STIX Two Text and Courier Prime; plain HTML, CSS and JavaScript, no build step.</p>
+      <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
+      <span id="utc-clock"></span>
+    </div>
   </footer>
 
   <button class="cmd-fab" id="cmd-fab">/ commands</button>
