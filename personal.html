@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Personal Projects — Jeffrey Shi</title>
-  <meta name="description" content="Personal projects by Jeffrey Shi — Ava, a Discord bot with statistical restock forecasting and an AI server auditor, plus Nexus Card Co, its companion web platform." />
+  <meta name="description" content="Personal projects by Jeffrey Shi — Ava, a Discord bot with statistical restock forecasting, automatic face blurring, and an AI server auditor, plus Nexus Card Co, its companion web platform." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,21 +34,22 @@
         <div class="panel">
           <p style="font-size:15px;">
             Outside of work, I run <strong style="color:var(--accent); font-weight:600;">Ava</strong> —
-            a Discord bot I built and maintain for a regional Pokémon and
-            collectibles restock community spanning Virginia, Maryland, and DC.
+            a Discord bot I built and maintain for a Pokémon and collectibles
+            restock community that started in Virginia, Maryland, and DC and
+            now covers seven states plus DC.
             It tracks confirmed restocks, unverified "hope" tips, and line
             lengths in real time, then turns that history into statistical
             forecasts members actually use to plan store runs.
           </p>
           <p style="font-size:15px; margin-top:14px;">
             It's grown into two connected products. Ava handles the Discord
-            side — moderation, raffles, reputation, onboarding, and now an
-            AI-assisted server-structure auditor. Its companion web app,
+            side — moderation, reputation, onboarding, photo privacy, and
+            an AI-assisted server-structure auditor. Its companion web app,
             <strong style="color:var(--accent); font-weight:600;">Nexus Card Co</strong>,
-            is a role-gated dashboard with restock analytics, a card
-            portfolio tracker, and a grading ROI calculator (a standalone
-            paid tier is scaffolded in but not yet turned on). Same
-            Postgres database, two codebases, both on Railway.
+            is a role-gated dashboard with restock analytics, a searchable
+            card catalog, a portfolio tracker, and a grading ROI
+            calculator. Same Postgres database, two codebases, both on
+            Railway.
           </p>
           <div class="hero-actions" style="margin-top:24px;">
             <a class="btn" href="https://discord.gg/FQAQ3DVdY7" target="_blank" rel="noopener">Join the server</a>
@@ -58,9 +59,9 @@
         <div class="panel">
           <div class="fact-row"><span class="fact-label">Stack</span><span class="val">Python · discord.py · FastAPI · PostgreSQL</span></div>
           <div class="fact-row"><span class="fact-label">Hosting</span><span class="val">Railway · CI/CD auto-deploy on push</span></div>
-          <div class="fact-row"><span class="fact-label">Bot</span><span class="val">46 cogs · 27 interactive views</span></div>
-          <div class="fact-row"><span class="fact-label">Web</span><span class="val">126 routes · 19 modules</span></div>
-          <div class="fact-row"><span class="fact-label">Coverage</span><span class="val">9 sub-regions across VA / MD / DC</span></div>
+          <div class="fact-row"><span class="fact-label">Bot</span><span class="val">55 cogs · 32 interactive views</span></div>
+          <div class="fact-row"><span class="fact-label">Web</span><span class="val">146 routes · 22 modules</span></div>
+          <div class="fact-row"><span class="fact-label">Coverage</span><span class="val">16 areas across 7 states + DC</span></div>
           <div class="fact-row"><span class="fact-label">Source</span><span class="val">Closed — proprietary logic</span></div>
         </div>
       </div>
@@ -69,9 +70,9 @@
     <section class="section" style="padding-top:0;">
       <p class="reveal" style="font-size:15px; color:var(--text-2); margin-bottom:32px; max-width:640px;">
         A selection of what's shipped across both codebases — the rest is
-        community infrastructure (moderation, raffles, reputation,
-        onboarding, calendars) and product plumbing (billing, auth, admin
-        tooling) that keeps things running.
+        community infrastructure (reputation, onboarding, calendars,
+        activity tracking) and product plumbing (auth, admin tooling)
+        that keeps things running.
       </p>
 
       <div class="grid-2">
@@ -124,9 +125,18 @@
               <li><strong style="color:var(--text);">Empirical Bayes regional pooling</strong> — estimates a region-wide base rate for a given day, then uses it as an informed prior so data-poor locations borrow strength from data-rich ones.</li>
               <li><strong style="color:var(--text);">James–Stein shrinkage</strong> — blends each location's own rate with the regional average, weighted by how much history that location actually has.</li>
             </ul>
+            <p style="margin-top:14px;">
+              Those credible intervals used to be the only reason scipy was
+              installed — roughly 70 MB of startup memory on a 512 MB host,
+              for two function calls. The Beta quantile is now about 80
+              lines of plain Python: a continued-fraction incomplete beta,
+              then Newton steps inside a bracket that falls back to
+              bisection. It was checked against scipy before the dependency
+              came out.
+            </p>
             <div class="case-meta">
               <span class="chip">Python</span>
-              <span class="chip">scipy</span>
+              <span class="chip">Numerical Methods</span>
               <span class="chip green">Bayesian Inference</span>
               <span class="chip green">Empirical Bayes</span>
             </div>
@@ -168,7 +178,7 @@
             <span class="case-status active">ACTIVE</span>
           </div>
           <div class="case-body">
-            <h3 data-scramble>Deal Watch Alert System</h3>
+            <h3 data-scramble>Deal &amp; Restock Alert Pipeline</h3>
             <p>
               Listens to a channel fed by a third-party price-diff bot, parses
               product name and price straight out of its embeds (handling
@@ -181,8 +191,17 @@
               per-rule cooldown deduplication so a flaky source feed can't
               spam the same deal twice.
             </p>
+            <p style="margin-top:10px;">
+              Members can also set their own. Keyword alerts saved on the
+              Nexus dashboard — with exclusion words, a store list, and a
+              price ceiling — are matched in a single Postgres query each
+              time a third-party restock monitor posts. Everyone who matched
+              gets one combined ping, by DM if they asked for it, falling
+              back to a channel mention when their DMs are closed.
+            </p>
             <div class="case-meta">
               <span class="chip">Python</span>
+              <span class="chip">PostgreSQL</span>
               <span class="chip">Regex Parsing</span>
               <span class="chip green">Event-Driven</span>
             </div>
@@ -233,13 +252,130 @@
             </p>
             <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
               <li><strong style="color:var(--text);">Privacy by construction</strong> — never reads message content, only channel/role metadata and the bot's own tables; the one tool that touches history reads timestamps only.</li>
-              <li><strong style="color:var(--text);">Regional parity is the reason it exists</strong> — six regions are supposed to be structurally identical, and drift there breaks features silently rather than loudly.</li>
+              <li><strong style="color:var(--text);">Regional parity is the reason it exists</strong> — every region is supposed to be structurally identical, and drift there breaks features silently rather than loudly.</li>
               <li><strong style="color:var(--text);">Degrades gracefully</strong> — the conversational agent uses a beta SDK surface, so it's wrapped in an import guard; the one-shot audit keeps working even if that path doesn't.</li>
             </ul>
             <div class="case-meta">
               <span class="chip">Claude Opus 5</span>
               <span class="chip">Agentic Tool Use</span>
               <span class="chip green">Privacy-First</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">AVA · PRIVACY</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Fail-Closed Face Blurring</h3>
+            <p>
+              Discord can't edit an attachment in place, so watermarking a
+              restock photo means deleting the member's post and reposting
+              it as the bot — which makes the bot the publisher. Before
+              anything goes back up, each photo runs through a face
+              detector (YuNet, via OpenCV's DNN module) and any face it
+              finds is blurred.
+            </p>
+            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
+              <li><strong style="color:var(--text);">Fails closed</strong> — a missing model, an unreadable image, an inference error, or a detection that wants to blur more than half the frame all mean "couldn't guarantee it," and the member's original post is left alone. The whole check runs before anything is deleted.</li>
+              <li><strong style="color:var(--text);">Tuned on a real failure</strong> — loosening the detection threshold to catch more faces turned a photo of a cat into a smear across 62% of the frame, so it went back to the default and the coverage guard went in.</li>
+              <li><strong style="color:var(--text);">Memory-aware</strong> — a detector is built per photo (about 3 ms) instead of shared, because a shared one was measured holding around 170 MB for the life of the process. Inference runs on a worker thread, off the event loop.</li>
+              <li><strong style="color:var(--text);">Hard to crop out</strong> — the watermark is a tiled diagonal text mark rather than a corner logo, and re-encoding drops EXIF and GPS data from what gets reposted.</li>
+              <li><strong style="color:var(--text);">Known limit</strong> — it catches clear, front-facing faces and misses people who are far away or turned to the side. It's a safety net, and members are told so.</li>
+            </ul>
+            <div class="case-meta">
+              <span class="chip">OpenCV</span>
+              <span class="chip">YuNet ONNX</span>
+              <span class="chip">Pillow</span>
+              <span class="chip green">Privacy</span>
+              <span class="chip green">Fail-Closed Design</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">AVA · MARKETPLACE</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Marketplace Rules &amp; Enforcement</h3>
+            <p>
+              The buy/sell forums have their own moderation layer, split
+              across both codebases: mods write removal rules in a web
+              editor on Nexus, and the bot checks every new For Sale post
+              against them.
+            </p>
+            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
+              <li><strong style="color:var(--text);">A small rule grammar</strong> — a rule is a list of groups, and a post matches if any group has all of its required terms and none of its excluded ones. Dashes count as spaces, <code>*</code> allows up to three words between two terms, and title and body are joined with a separator so a phrase can't straddle the two.</li>
+              <li><strong style="color:var(--text);">Broken rules can't widen</strong> — a rule the bot can't parse is skipped and logged, never read as "match everything." The editor rejects exactly the cases the bot would skip, so the mod finds out on save instead of never.</li>
+              <li><strong style="color:var(--text);">One table, one owner</strong> — the bot owns the schema and the dashboard only writes rows, so two apps never migrate the same table in different directions.</li>
+              <li><strong style="color:var(--text);">Strikes</strong> — one is a warning, two is seven days read-only, three removes marketplace access. The block is a per-member permission overwrite, because Discord ranks a member's own overwrite above any role's; it's reapplied if they leave and rejoin.</li>
+              <li><strong style="color:var(--text);">Listing flags</strong> — anonymous to the seller but visible to mods, on purpose: the realistic abuse is sellers flagging competitors, and mods can only spot that if they can see who's flagging.</li>
+            </ul>
+            <div class="case-meta">
+              <span class="chip">Python</span>
+              <span class="chip">PostgreSQL JSONB</span>
+              <span class="chip">FastAPI</span>
+              <span class="chip green">Rule Engine</span>
+              <span class="chip green">Trust &amp; Safety</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">AVA · EXPANSION</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Multi-State Expansion</h3>
+            <p>
+              The server began as three neighbors — Virginia, Maryland, and
+              DC — with region names written directly into the code. In
+              October it added Pennsylvania, Texas, Florida, Illinois, and
+              Colorado, which meant turning "region" into data first.
+            </p>
+            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
+              <li><strong style="color:var(--text);">One-command provisioning</strong> — an admin command previews, then clones a template state's roles, channel permissions, and onboarding option. Anything that already exists is reused, so a run that stopped halfway can simply be run again.</li>
+              <li><strong style="color:var(--text);">Validated at startup</strong> — the region tables are checked on boot for missing IDs, duplicate labels, a state in no zone, or a bad time zone, so a typo shows up in the deploy log instead of on the first callout.</li>
+              <li><strong style="color:var(--text);">Stores keyed by ID, not name</strong> — there's an Arlington Target in Virginia and another in Texas. Joins moved to a location ID so their histories can't merge, and on the dashboard a member with a Texas role sees Texas data only, filtered in SQL.</li>
+              <li><strong style="color:var(--text);">Per-area time zones</strong> — Texas runs on Central. Reporting cutoffs, store hours, and the forecast math use the area's own clock, not the server's.</li>
+            </ul>
+            <div class="case-meta">
+              <span class="chip">Python</span>
+              <span class="chip">PostgreSQL</span>
+              <span class="chip green">Data Modeling</span>
+              <span class="chip green">Idempotent Ops</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case-file reveal">
+          <div class="case-header">
+            <span class="case-id">NEXUS · CATALOG</span>
+            <span class="case-status active">ACTIVE</span>
+          </div>
+          <div class="case-body">
+            <h3 data-scramble>Card Catalog, Tally &amp; Trade Calculator</h3>
+            <p>
+              A searchable price catalog for Pokémon and Riftbound singles
+              and sealed product. Guests can use it without logging in,
+              limited to the newest sets.
+            </p>
+            <ul style="font-size:13.5px; color:var(--text-2); margin:14px 0 0 18px; line-height:1.9;">
+              <li><strong style="color:var(--text);">Live search</strong> — trigram (<code>pg_trgm</code>) GIN indexes are built at startup, in-flight requests are aborted so a slow response can't overwrite a newer one, and rows and filter facets come back together.</li>
+              <li><strong style="color:var(--text);">Quick Tally</strong> — a running list of cards with CSV export. Cells are escaped against spreadsheet formula injection, since card names come from third-party price APIs and aren't mine to trust.</li>
+              <li><strong style="color:var(--text);">Trade calculator</strong> — two sides valued at market, with editable prices. It lives entirely in the browser's local storage; nothing about a trade is sent to the server.</li>
+              <li><strong style="color:var(--text);">A second game without a rewrite</strong> — adding Riftbound replaced a hard-coded game list on every page with one registry of games and feature flags that each picker and endpoint reads.</li>
+            </ul>
+            <div class="case-meta">
+              <span class="chip">FastAPI</span>
+              <span class="chip">PostgreSQL · pg_trgm</span>
+              <span class="chip green">Search</span>
+              <span class="chip green">Multi-Game</span>
             </div>
           </div>
         </article>
