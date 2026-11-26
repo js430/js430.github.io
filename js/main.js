@@ -131,6 +131,7 @@
     home: "index.html",
     main: "index.html",
     projects: "projects.html",
+    wedding: "wedding.html",
     personal: "personal.html",
     resume: "resume.html",
     contact: "index.html#contact",
@@ -177,7 +178,7 @@
     }
     if (cmd === "help") {
       input.value = "";
-      input.placeholder = "commands: home | projects | personal | resume | contact | download | terminal";
+      input.placeholder = "commands: home | projects | wedding | personal | resume | contact | download | terminal";
       return;
     }
     if (cmd === "download" || cmd === "pdf") {
