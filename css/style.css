@@ -616,6 +616,12 @@ kbd {
   .cmd-fab { right: 12px; bottom: 12px; }
 }
 
+/* Five nav links on the narrowest phones: tighten, and wrap rather than
+   push the page sideways. */
+@media (max-width: 400px) {
+  .mast-nav { flex-wrap: wrap; gap: 0.3em 0.9em; font-size: 0.88rem; }
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -59,6 +59,7 @@
     "  about      who is behind this terminal",
     "  skills     core technical skills",
     "  projects   open the projects page",
+    "  wedding    open the wedding website write-up",
     "  personal   open personal projects (Ava bot)",
     "  resume     open the resume page",
     "  home       back to the home page",
@@ -116,7 +117,7 @@
         printLines(RESPONSES[base]);
         break;
       case "ls":
-        printLines(["about.txt  skills.txt  projects/  personal/  resume.pdf  contact.txt"]);
+        printLines(["about.txt  skills.txt  projects/  wedding/  personal/  resume.pdf  contact.txt"]);
         break;
       case "cat":
         if (/resume/.test(arg))      printLines(["run 'download' to get the PDF, or 'resume' to open the page."]);
@@ -132,6 +133,10 @@
       case "projects":
         printLines(["→ opening projects…"]);
         setTimeout(() => (window.location.href = "projects.html"), 300);
+        break;
+      case "wedding":
+        printLines(["→ opening the wedding website write-up…"]);
+        setTimeout(() => (window.location.href = "wedding.html"), 300);
         break;
       case "personal":
         printLines(["→ opening personal projects…"]);
