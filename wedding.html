@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Website — Jeffrey Shi</title>
+  <meta name="description" content="How I built a private wedding website — invitations, RSVPs, a Notion-backed registry and a seating chart — with Claude Code and parallel AI agents, and how agents tested it before launch." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <noscript><style>.reveal, .hero-load { opacity: 1; transform: none; animation: none; }</style></noscript>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="mast-name" href="index.html">Jeffrey Shi</a>
+      <nav class="mast-nav" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="personal.html">Personal</a>
+        <a href="resume.html">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="col">
+
+      <header class="page-title">
+        <h1 class="hero-load" style="animation-delay:0.05s">Wedding Website</h1>
+        <p class="standfirst hero-load" style="animation-delay:0.18s">
+          A private website for our wedding: invitations, RSVPs with meal
+          choices, a gift registry, a seating chart and the day's details,
+          all behind one shared password.
+        </p>
+      </header>
+
+      <div class="hero-load" style="animation-delay:0.3s">
+        <p>
+          Much of it was built in conversation with Claude Code, Anthropic's
+          coding agent. I described what I wanted in plain language and made
+          the product decisions; Claude read the code, made each change,
+          checked it in a headless browser and opened a pull request, and
+          merging deployed it. For bigger features and for testing, the main
+          session split the work across several agents running in parallel.
+        </p>
+        <p>
+          The site itself is guests-only, so this page describes how it
+          works rather than linking to it.
+        </p>
+        <div class="actions">
+          <a href="projects.html">Back to projects</a>
+        </div>
+      </div>
+
+      <table class="bt reveal" style="margin-top:2.6em;">
+        <caption><b>Table 1.</b> The project at a glance.</caption>
+        <tbody>
+          <tr><th scope="row">Stack</th><td>Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS</td></tr>
+          <tr><th scope="row">Data</th><td>Notion databases for RSVPs, registry, seating and page views, through the Notion API</td></tr>
+          <tr><th scope="row">Email</th><td>Resend: confirmations, edit links, registry links, invitations</td></tr>
+          <tr><th scope="row">Hosting</th><td>Render, custom domain</td></tr>
+          <tr><th scope="row">Size</th><td>10 pages, 16 API routes, 33 components; about 9,200 lines of TypeScript and JavaScript</td></tr>
+          <tr><th scope="row">History</th><td>127 commits in 28 pull requests, May to November 2026</td></tr>
+          <tr><th scope="row">Source</th><td>Not linked: a guest-only site</td></tr>
+        </tbody>
+      </table>
+
+      <nav class="contents reveal" aria-label="Contents">
+        <p class="contents-head">Contents</p>
+        <ol class="toc">
+          <li><a href="#gate"><span class="t">Invite-only access</span><span class="lead"></span><span class="who">Guests</span></a></li>
+          <li><a href="#rsvp"><span class="t">RSVPs, meals and edits</span><span class="lead"></span><span class="who">Guests</span></a></li>
+          <li><a href="#registry"><span class="t">A registry with Notion as the back end</span><span class="lead"></span><span class="who">Guests</span></a></li>
+          <li><a href="#frontend"><span class="t">The front end</span><span class="lead"></span><span class="who">Guests</span></a></li>
+          <li><a href="#seating"><span class="t">Seating chart</span><span class="lead"></span><span class="who">Hosts</span></a></li>
+          <li><a href="#dashboards"><span class="t">Private dashboards</span><span class="lead"></span><span class="who">Hosts</span></a></li>
+          <li><a href="#invites"><span class="t">Invitation emails</span><span class="lead"></span><span class="who">Hosts</span></a></li>
+          <li><a href="#claude"><span class="t">Working with Claude and agents</span><span class="lead"></span><span class="who">Process</span></a></li>
+          <li><a href="#testing"><span class="t">Testing with parallel agents</span><span class="lead"></span><span class="who">Process</span></a></li>
+          <li><a href="#broke"><span class="t">Things that broke</span><span class="lead"></span><span class="who">Process</span></a></li>
+        </ol>
+      </nav>
+
+      <div class="entries">
+
+        <article class="entry has-mn reveal" id="gate">
+          <h2 class="entry-title" data-scramble>Invite-Only Access</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Next.js middleware, Web Crypto</dd>
+              <dt>Keywords</dt><dd>HMAC, rate limiting</dd>
+            </dl>
+          </aside>
+          <p>
+            Only guests should see the site, without anyone having to create
+            an account. Everyone gets the same password, delivered as a link
+            in their invitation.
+          </p>
+          <ul>
+            <li><strong>One link, any device.</strong> Opening the invite link signs that device in and shows the password, so it can be typed on a second device. The link doesn't contain the password: it carries a short token derived from the password and a server-side secret.</li>
+            <li><strong>Signed sessions.</strong> The session cookie is an HMAC tied to the password's hash, so changing the password signs everyone out and retires every old link at once.</li>
+            <li><strong>Wrong-guess blocking.</strong> Five wrong guesses from one network pause entry for an hour (a day for repeat offenders), and the page says how long is left.</li>
+            <li><strong>Safe returns.</strong> After signing in, guests land on the page they asked for. The return path is checked so a crafted link can't send them to another site afterwards, including the tab-character trick that browsers quietly strip, which testing caught.</li>
+          </ul>
+        </article>
+
+        <article class="entry has-mn reveal" id="rsvp">
+          <h2 class="entry-title" data-scramble>RSVPs, Meals and Edits</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Notion API, Resend</dd>
+              <dt>Keywords</dt><dd>Signed links, serialization</dd>
+            </dl>
+          </aside>
+          <p>
+            Each RSVP is a row in a Notion database, which doubles as the
+            caterer's list.
+          </p>
+          <ul>
+            <li><strong>One tap for attendance.</strong> "Joyfully accepts – just me", "Joyfully accepts – with a +1" or "Regretfully declines", then a meal for each person from two mains and a list of dietary options.</li>
+            <li><strong>One row per email.</strong> Submitting again updates the same RSVP, and two submissions for the same address at once are handled one after the other, so they can't create duplicates.</li>
+            <li><strong>Confirmation email.</strong> The answers, calendar files (an <code>.ics</code> with its time zone, and a Google Calendar link) and a signed link to change the RSVP. The edit deadline is enforced on the server, not just in the page.</li>
+            <li><strong>Lost links.</strong> "Email me my edit link" answers the same way, in the same time, whether or not an address has an RSVP, so it can't be used to check who's invited.</li>
+            <li><strong>Update emails.</strong> Guests can opt out of wedding updates; the choice is saved with their RSVP.</li>
+          </ul>
+        </article>
+
+        <article class="entry has-mn reveal" id="registry">
+          <h2 class="entry-title" data-scramble>A Registry with Notion as the Back End</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Notion API, Resend</dd>
+              <dt>Keywords</dt><dd>Concurrency, rollback</dd>
+            </dl>
+          </aside>
+          <p>
+            Gifts live in a Notion database we edit like a spreadsheet. The
+            site turns the rows into a registry with category and price
+            filters; picking gifts emails the guest the purchase links and
+            our shipping address.
+          </p>
+          <ul>
+            <li><strong>Options and quantities.</strong> Rows that share a group become one gift with a picker. A group can be "choose one" (picking an option closes the rest) or "choose any" (each option is claimed separately), and any row can want more than one. For a pair of lamps, the first purchase picks the finish and the next guest only sees that finish.</li>
+            <li><strong>Claims that can't collide.</strong> Notion has no transactions, so claims are processed one at a time, availability is re-read from Notion before each one, and the names, prices and links in the email come from Notion rather than the browser. If the email fails, the claim is rolled back so the guest can simply try again.</li>
+            <li><strong>Privacy.</strong> A guest's name and email are stored encrypted on the gift they claimed, and the shipping address only appears once a gift is claimed.</li>
+            <li><strong>Prices and cash.</strong> Prices are marked as MSRP, with a note encouraging guests to buy wherever it's cheaper, and a cash-on-the-day option sits at the top of the page.</li>
+          </ul>
+          <figure class="fig-shot">
+            <img src="assets/wedding/registry-cards.webp" width="1400" height="417" loading="lazy"
+                 alt="Four registry cards: a scented candle with three scent options and one selected, a flatware set with a choose-one picker, a Dutch oven with a preferred colour, and a salad bowl." />
+            <figcaption><span class="fig-n">Fig. 1.</span> Registry cards, shown with sample data: a "choose any" gift with one option selected, a "choose one" gift, and a gift with a preferred colour.</figcaption>
+          </figure>
+        </article>
+
+        <article class="entry has-mn reveal" id="frontend">
+          <h2 class="entry-title" data-scramble>The Front End</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Framer Motion, three.js, Tailwind CSS</dd>
+              <dt>Keywords</dt><dd>Accessibility, motion</dd>
+            </dl>
+          </aside>
+          <ul>
+            <li><strong>An envelope intro.</strong> The seal cracks, the flap opens and the card slides out. It plays once per browser tab and is skipped for reduced-motion settings or when a guest follows a link straight to a section.</li>
+            <li><strong>The rest of the page.</strong> Falling petals drawn with three.js through react-three-fiber, a photo gallery with a parallax grid and a lightbox, a countdown, an FAQ and a local guide.</li>
+            <li><strong>Accessibility from testing.</strong> Labelled form fields, a lightbox that behaves as a dialog, keyboard paths through every menu, and small text raised to at least 4.5:1 contrast.</li>
+            <li><strong>Sharing.</strong> A link-preview image and icons, and no search-engine indexing anywhere.</li>
+          </ul>
+        </article>
+
+        <article class="entry has-mn reveal" id="seating">
+          <h2 class="entry-title" data-scramble>Seating Chart</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>dnd-kit, Notion API</dd>
+              <dt>Keywords</dt><dd>Drag and drop</dd>
+            </dl>
+          </aside>
+          <p>
+            A separate password-protected page where we drag attending
+            guests onto tables. Each assignment is saved to Notion and copied
+            onto the guest's RSVP, so the chart and the caterer's list agree.
+          </p>
+          <ul>
+            <li>A guest bringing a plus-one counts as two places; a table over capacity turns red.</li>
+            <li>Two open tabs can't double-book a seat: the server refuses a taken seat, and swapping two seated guests is saved as three ordered steps.</li>
+            <li>A guest assigned to a table this browser doesn't know about is listed as unassigned instead of disappearing.</li>
+          </ul>
+          <figure class="fig-shot">
+            <img src="assets/wedding/seating-chart.webp" width="1400" height="988" loading="lazy"
+                 alt="Seating chart with an unassigned guest on the left and round tables of eight seats; two guests are seated at Table 1, which reads 3 of 8." />
+            <figcaption><span class="fig-n">Fig. 2.</span> The seating chart with sample guests. Table 1 reads 3/8 because one of its two guests brings a plus-one.</figcaption>
+          </figure>
+        </article>
+
+        <article class="entry has-mn reveal" id="dashboards">
+          <h2 class="entry-title" data-scramble>Private Dashboards</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Next.js, Notion API</dd>
+              <dt>Keywords</dt><dd>Lockout, analytics</dd>
+            </dl>
+          </aside>
+          <ul>
+            <li><strong>Meal counts for the caterer.</strong> Totals per dish including plus-ones, declines left out, and every allergy note in one list.</li>
+            <li><strong>Page views.</strong> Counted in memory and written to Notion at most once a minute, by day and page only. Only real page paths are counted.</li>
+            <li><strong>Passwords.</strong> Compared in constant time, and ten wrong tries in fifteen minutes locks that network out for the rest of the window.</li>
+          </ul>
+        </article>
+
+        <article class="entry has-mn reveal" id="invites">
+          <h2 class="entry-title" data-scramble>Invitation Emails</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Node.js, Resend</dd>
+              <dt>Keywords</dt><dd>Idempotency</dd>
+            </dl>
+          </aside>
+          <p>
+            A script I run from my own computer sends the invitations. It
+            reads a guest list that's kept out of the repository, previews
+            the email, sends a test, and only sends for real after I type
+            <code>SEND</code>.
+          </p>
+          <ul>
+            <li>Each household's send carries an idempotency key and is recorded, so running it again only emails people added since.</li>
+            <li>Each run stays under the email provider's daily limit; the next run picks up where it stopped.</li>
+            <li>The same design can be uploaded to Resend as a draft broadcast, to review and send from their dashboard instead.</li>
+          </ul>
+        </article>
+
+        <article class="entry has-mn reveal" id="claude">
+          <h2 class="entry-title" data-scramble>Working with Claude and Agents</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Tools</dt><dd>Claude Code (cloud sessions), GitHub, Render</dd>
+              <dt>Keywords</dt><dd>Agents, pull requests</dd>
+            </dl>
+          </aside>
+          <p>
+            Most requests were a sentence or two, like "for the cash
+            registry, put it at the top of the page" or "change the door open
+            time for everything to 4:30pm". Claude found every place that needed to change,
+            made the edit, built the site, checked the result in a headless
+            browser, and opened a pull request saying what changed and how it
+            was checked. Merging it deployed to Render.
+          </p>
+          <ul>
+            <li><strong>One change, one pull request.</strong> 28 merged so far, each small enough to read before merging.</li>
+            <li><strong>Parallel agents for bigger features.</strong> For the meal-choice RSVP, the colour palette and the invite gate, the main session wrote a plan and the interfaces the pieces had to share, then handed the pieces to subagents working in separate git worktrees, with another agent testing the combined result.</li>
+            <li><strong>Decisions stayed mine.</strong> One shared password instead of per-household codes, cash on the day instead of payment apps, what stays private, and the wording guests see.</li>
+            <li><strong>Pushback when it mattered.</strong> Claude flagged things I hadn't asked about: an email address that shouldn't go into a public repository, a live bug that stopped guests who declined from submitting, and a fix of its own that had broken seat swapping.</li>
+          </ul>
+        </article>
+
+        <article class="entry has-mn reveal" id="testing">
+          <h2 class="entry-title" data-scramble>Testing with Parallel Agents</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Built with</dt><dd>Playwright, Node.js</dd>
+              <dt>Keywords</dt><dd>QA, race conditions</dd>
+            </dl>
+          </aside>
+          <p>
+            Before sending invitations I asked for a full test of every
+            interaction. The main session built a harness first: an
+            in-memory stand-in for the Notion and Resend APIs, with switches
+            to slow every response, take Notion down or make email fail, and
+            a preload that points the production build at it. Each tester
+            agent then ran its own copy of the site, drove it in a real
+            browser with Playwright, and reported findings with steps to
+            reproduce.
+          </p>
+          <table class="bt">
+            <caption><b>Table 2.</b> The testing rounds.</caption>
+            <thead>
+              <tr><th scope="col">Round</th><th scope="col">Agents</th><th scope="col">Outcome</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>5 testers, one per area: password gate, RSVP, registry, public pages, private pages and APIs</td><td>More than 50 findings, from an open redirect, guest text unescaped in emails and two guests able to claim the same gift, down to contrast</td></tr>
+              <tr><td>2</td><td>1 verifier</td><td>All 34 fixes confirmed; 3 small follow-ups</td></tr>
+              <tr><td>3</td><td>5 testers, then 1 verifier</td><td>One real regression (seat swapping) and small issues; all 18 fixes confirmed</td></tr>
+            </tbody>
+          </table>
+          <p>
+            Two rules kept this honest. The main session reproduced each
+            finding before fixing it, and the fixes were checked by a fresh
+            agent rather than by the one that wrote them.
+          </p>
+        </article>
+
+        <article class="entry has-mn reveal" id="broke">
+          <h2 class="entry-title" data-scramble>Things That Broke</h2>
+          <aside class="mn">
+            <dl class="spec">
+              <dt>Keywords</dt><dd>Debugging</dd>
+            </dl>
+          </aside>
+          <ul>
+            <li><strong>Headings that lost letters.</strong> Animating each letter of a heading drawn with a clipped gradient gave each letter its own compositing layer, where the gradient didn't paint, so "Registry" rendered as "Re stry". Animating the heading as a whole fixed it.</li>
+            <li><strong>Redirects to localhost.</strong> Behind Render's proxy the server only knows its internal address, so redirects sent guests to <code>localhost:10000</code>. The fix was relative redirects plus a configured public address for links in emails.</li>
+            <li><strong>An upgrade that crashed the petals.</strong> Moving to Next.js 15 left the 3D library on a renderer built for the previous React, and the page crashed in the browser until React 19 and the matching react-three-fiber went in together.</li>
+            <li><strong>Calendar files without carriage returns.</strong> Calendar files need CRLF line endings; the build normalised them away in a template string and static rendering did it again. They're now built from explicit characters and generated on each request.</li>
+            <li><strong>Locked out by our own gate.</strong> Next.js's image optimiser fetches images internally without the guest's cookie, so the password gate blocked it. Gallery images are now pre-generated thumbnails.</li>
+          </ul>
+        </article>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="colophon">
+    <div class="colophon-inner">
+      <p>&copy; 2026 Jeffrey Shi. Set in STIX Two Text and Courier Prime; plain HTML, CSS and JavaScript, no build step.</p>
+      <span class="mono-hint">Press <kbd>/</kbd> for commands</span>
+      <span id="utc-clock"></span>
+    </div>
+  </footer>
+
+  <button class="cmd-fab" id="cmd-fab">/ commands</button>
+  <div class="cmd-palette" id="cmd-palette">
+    <div class="cmd-row">
+      <span class="p">&gt;</span>
+      <input id="cmd-input" type="text" placeholder="Type a command… (try: help)" aria-label="Site command" autocomplete="off" spellcheck="false" />
+    </div>
+    <div class="cmd-hint"><span class="k">ENTER</span> run &nbsp;·&nbsp; <span class="k">ESC</span> close &nbsp;·&nbsp; home, projects, personal, resume, contact, download, terminal</div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/terminal.js"></script>
+</body>
+</html>

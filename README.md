@@ -14,6 +14,7 @@ JavaScript dependencies; the only third-party requests are Google Fonts (styles 
 |------|------|-------|
 | Home | `index.html` | Title block with the ink-line globe (Fig. 1), about, what I do, contact |
 | Projects | `projects.html` | Professional work as numbered entries with margin specs |
+| Wedding Website | `wedding.html` | Write-up of the wedding site and how it was built with Claude Code and agents; linked from Projects. Screenshots in `assets/wedding/` use sample data only (no guest data, password, links or addresses) |
 | Personal | `personal.html` | Ava Discord bot and Nexus Card Co — contents list, 13 entries |
 | Resume | `resume.html` | Interactive resume: tabs, expandable timeline, skills table, PDF download |
 
